@@ -10,9 +10,10 @@
 
 - トップ画面から条件入力画面へ移動する。
 - バイク／自動車、30・60・90・120分、6種類のジャンルを選択する。
+- 「目的地を探す」で、条件に合う目的地をデモ用データから自動で決める（行き先は表示しない）。
 - ナビ画面と到着画面のレイアウトを確認する。
 
-現在は初期構築段階です。冒険開始ボタンは無効で、目的地の決定や実際の案内は行いません。選択内容は画面内のReact stateで保持し、画面を離れるとリセットされます。ナビ・到着画面には実際の経路や到着実績を表示しません。
+条件はsessionStorage（`mystery-navi:setup:v1`）に、決定結果は`mystery-navi:plan:v1`に保存します。目的地の決定は固定のデモ出発地点とデモ用データで行い、GPS・経路検索・矢印ナビは未実装です。「冒険を開始する」は経路の準備ができるまで無効です。ナビ・到着画面には実際の経路や到着実績を表示しません。
 
 ## 使用技術・開発環境
 
@@ -71,7 +72,8 @@ npm start
 | URL | 確認内容 |
 | --- | --- |
 | `/` | 製品名と説明、「冒険を始める」から`/setup`への遷移 |
-| `/setup` | 各選択肢の操作、選択状態の表示、開始ボタンが無効であること |
+| `/setup` | 各選択肢の操作、3項目選択後に「目的地を探す」が有効になり目的地決定画面へ進むこと |
+| `/adventure/destination` | 条件確認 → 目的地を探す → 検索中 → 「目的地が決まりました！」（目的地名は非表示）。条件がない／候補がない場合の表示 |
 | `/adventure` | 案内・残り時間・表示切り替え・中断の領域と未実装表示 |
 | `/arrived` | 到着画面のプレビュー表示、実績がない旨、トップへ戻る操作 |
 
@@ -80,17 +82,17 @@ PCとスマートフォン幅（320px・390px）で確認してください。�
 ## ディレクトリ構成
 
 ```text
-app/                    # 4画面と共通レイアウト
+app/                    # 画面、共通レイアウト、api/adventures
 components/layout/      # ページ見出し
 components/ui/          # 共通リンク
-components/adventure/   # 条件入力UI
+components/adventure/   # 条件入力UI、目的地決定UI
 features/adventure/     # 選択肢の定義
 lib/location/           # GPS／デモ共通のLocationProviderインターフェース
 types/                  # 仕様書に対応する基本型
 .github/                # Issue・PRテンプレート
 ```
 
-Route HandlersはAPI実装時に`app/api/`へ追加します。`lib/routing/`、`lib/navigation/`、`data/`、`public/images/`、`tests/`も利用する機能の実装時に追加し、不要な空ディレクトリは作成しません。
+`POST /api/adventures`（`app/api/adventures/`）が目的地を決め、`adventureId`・推定所要時間・状態・エラーコードと、内部保持用の不透明な`destinationId`を返します。名称・座標は返しません。`lib/routing/`、`lib/navigation/`、`data/`、`public/images/`、`tests/`も利用する機能の実装時に追加し、不要な空ディレクトリは作成しません。
 
 ## 目的地データ（検証用）
 
