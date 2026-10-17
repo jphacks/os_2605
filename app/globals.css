@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+body {
+  margin: 0;
+  background: #f5f5ed;
+  color: #183c32;
+  font-family:
+    Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+}
+button,
+input,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+a,
+button,
+input {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 3px solid #b85a24;
+  outline-offset: 5px;
+}
+::selection {
+  background: #d7e6b5;
+}
