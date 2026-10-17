@@ -49,6 +49,8 @@ export type OpeningInfo = {
 
 /** 目的地の登録データ。名称・座標は通常UIへ渡さない。 */
 export type DestinationCandidate = {
+  source?: "openstreetmap" | "curated";
+  sourceUrl?: string;
   id: string;
   name: string;
   category: Exclude<Category, "random">;
@@ -62,6 +64,8 @@ export type DestinationCandidate = {
   accessVerified: boolean;
   /** 出発地点ID別の片道推定所要時間（分）。デモ用の仮定値で、実走行の経路情報ではない。 */
   demoDurations: Record<string, number>;
+  /** 実在の座標・アクセス・通行条件を確認した場合のみtrue。 */
+  liveRoutingVerified?: boolean;
 };
 
 export type DestinationSelectionErrorCode =
@@ -86,9 +90,11 @@ export type DestinationSelectionResult =
 /** destinationId は内部状態。画面表示用データに目的地の名称・座標・画像を含めない。 */
 export type AdventurePlan = {
   adventureId: string;
+  route?: Route;
   settings: AdventureSettings;
   origin: Origin;
   destinationId: string;
+  destination?: DestinationCandidate;
   estimatedDurationMinutes: number;
   status: AdventureStatus;
   mode: AdventureMode;
@@ -101,14 +107,19 @@ export type Maneuver =
   | "SLIGHT_LEFT"
   | "SLIGHT_RIGHT"
   | "UTURN"
-  | "ARRIVE";
+  | "ARRIVE"
+  | "OTHER";
 
 export type RouteStep = {
   id: string;
   location: Coordinates;
   maneuver: Maneuver;
   instruction: string;
+  /** この区間の距離。案内地点までの距離はdistanceFromOriginMeters。 */
   distanceMeters: number;
+  durationSeconds: number;
+  endLocation: Coordinates;
+  distanceFromOriginMeters: number;
 };
 
 export type NavigationViewMode = "adventure" | "map";
@@ -119,9 +130,17 @@ export type LocationSample = Coordinates & {
 };
 
 export type Route = {
+  id: string;
+  origin: Coordinates;
+  destination: Coordinates;
+  provider: "demo-schematic" | "google-routes" | "osrm";
+  mode: AdventureMode;
+  geometryKind: "schematic" | "road";
+  mapCompatibility: "schematic-only" | "google-maps" | "openstreetmap";
   durationSeconds: number;
   distanceMeters: number;
-  geometry: Coordinates[]; // 経路順の座標列。案内地点同士を直線で結ぶ代用はしない
+  /** geometryKind が schematic の場合、実道路ではない検証用模式図。 */
+  geometry: Coordinates[]; // 経路順の座標列。実道路では道路形状そのものを保持
   steps: RouteStep[];
 };
 

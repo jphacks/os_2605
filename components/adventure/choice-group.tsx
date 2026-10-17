@@ -5,7 +5,9 @@ export function ChoiceGroup<T extends string | number>({
   options,
   value,
   onChange,
+  disabled = false,
 }: {
+  disabled?: boolean;
   legend: string;
   name: string;
   options: readonly Choice<T>[];
@@ -13,7 +15,7 @@ export function ChoiceGroup<T extends string | number>({
   onChange: (value: T) => void;
 }) {
   return (
-    <fieldset>
+    <fieldset disabled={disabled}>
       <legend className="mb-3 font-bold">{legend}</legend>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {options.map((option) => (
