@@ -1,13 +1,5 @@
-import { PageHeading } from "@/components/layout/page-heading";
-import { SetupForm } from "@/components/adventure/setup-form";
-export const metadata = { title: "冒険の条件" };
+import { TimeFlow } from "@/components/flow/time-flow";
+export const metadata = { title: "時間を決める" };
 export default function SetupPage() {
-  return (
-    <>
-      <PageHeading eyebrow="冒険の準備" title="今日の気分で、出かけよう。">
-        行き先はまだ決めなくて大丈夫。時間と気分を選びましょう。
-      </PageHeading>
-      <SetupForm />
-    </>
-  );
+  return <TimeFlow />;
 }

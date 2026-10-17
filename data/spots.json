@@ -2,7 +2,7 @@
   {
     "id": "spot-001",
     "name": "検証用スポット 01",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 34.9,
       "lng": 135.6
@@ -26,7 +26,7 @@
   {
     "id": "spot-002",
     "name": "検証用スポット 02",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 34.91,
       "lng": 135.61
@@ -49,7 +49,7 @@
   {
     "id": "spot-003",
     "name": "検証用スポット 03",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 34.92,
       "lng": 135.62
@@ -73,7 +73,7 @@
   {
     "id": "spot-004",
     "name": "検証用スポット 04",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 34.93,
       "lng": 135.63
@@ -96,7 +96,7 @@
   {
     "id": "spot-005",
     "name": "検証用スポット 05",
-    "category": "scenery",
+    "category": "cafe",
     "location": {
       "lat": 34.94,
       "lng": 135.64
@@ -311,7 +311,7 @@
   {
     "id": "spot-014",
     "name": "検証用スポット 14",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 35.03,
       "lng": 135.73
@@ -335,7 +335,7 @@
   {
     "id": "spot-015",
     "name": "検証用スポット 15",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 35.04,
       "lng": 135.74
@@ -359,7 +359,7 @@
   {
     "id": "spot-016",
     "name": "検証用スポット 16",
-    "category": "scenery",
+    "category": "nature",
     "location": {
       "lat": 35.05,
       "lng": 135.75

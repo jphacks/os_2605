@@ -1,0 +1,26 @@
+[
+  {
+    "id": "biwako-kome-plaza",
+    "name": "道の駅 びわ湖大橋米プラザ",
+    "category": "roadside_station",
+    "location": {
+      "lat": 35.1222,
+      "lng": 135.9226
+    },
+    "description": "琵琶湖大橋西詰にある道の駅。滋賀の産品や琵琶湖の眺めを楽しめます。座標は施設付近の目安です。営業時間・駐車場入口は現地で確認してください。",
+    "imageUrl": "",
+    "source": "curated",
+    "sourceUrl": "https://www.biwako-visitors.jp/spot/detail/9584/",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "accessVerified": false,
+    "openingInfo": {
+      "type": "unknown",
+      "note": "実地未確認。最新情報は公式案内を参照。"
+    },
+    "demoDurations": {}
+  }
+]

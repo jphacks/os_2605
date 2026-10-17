@@ -1,5 +1,7 @@
 import { ARRIVAL_CONFIG, NAVIGATION_CONFIG } from "@/config/navigation";
 import type { Coordinates, LocationSample, Route, RouteStep } from "@/types/adventure";
+/** 案内に必要な部分。目的地の座標フィールドは要らない。 */
+export type NavigationRoute = Pick<Route, "geometry" | "steps" | "distanceMeters" | "durationSeconds">;
 export function validCoordinates(value: Coordinates) {
   return Number.isFinite(value.lat) && Math.abs(value.lat) <= 90 && Number.isFinite(value.lng) && Math.abs(value.lng) <= 180;
 }
@@ -30,7 +32,7 @@ export type NavigationGuidance = {
 };
 type Projection = { distance: number; progress: number; segment: number };
 
-function geometryCumulative(route: Route) {
+function geometryCumulative(route: NavigationRoute) {
   const cumulative = [0];
   for (let index = 1; index < route.geometry.length; index++) cumulative.push(cumulative[index - 1] + distanceMeters(route.geometry[index - 1], route.geometry[index]));
   return cumulative;
@@ -44,7 +46,7 @@ function projectToSegment(point: Coordinates, start: Coordinates, end: Coordinat
   const ratio = squared === 0 ? 0 : Math.max(0, Math.min(1, (wx * vx + wy * vy) / squared));
   return { distance: Math.hypot(wx - vx * ratio, wy - vy * ratio), progress: before + Math.sqrt(squared) * ratio, segment: 0 };
 }
-function closestProjection(route: Route, point: Coordinates, previous?: NavigationProgress) {
+function closestProjection(route: NavigationRoute, point: Coordinates, previous?: NavigationProgress) {
   if (route.geometry.length < 2 || !route.geometry.every(validCoordinates)) return null;
   const cumulative = geometryCumulative(route), geometryLength = cumulative.at(-1) ?? 0;
   if (!Number.isFinite(geometryLength) || geometryLength <= 0) return null;
@@ -59,12 +61,12 @@ function closestProjection(route: Route, point: Coordinates, previous?: Navigati
   }
   return best;
 }
-function nextStep(route: Route, progressMeters: number) {
+function nextStep(route: NavigationRoute, progressMeters: number) {
   const index = route.steps.findIndex((step, stepIndex) => stepIndex > 0 && step.distanceFromOriginMeters > progressMeters + NAVIGATION_CONFIG.stepPassToleranceMeters);
   const stepIndex = index >= 0 ? index : route.steps.length - 1;
   return { step: route.steps[stepIndex], stepIndex };
 }
-export function updateNavigation(route: Route, sample: LocationSample, previous?: NavigationProgress, now = Date.now()): NavigationGuidance | null {
+export function updateNavigation(route: NavigationRoute, sample: LocationSample, previous?: NavigationProgress, now = Date.now()): NavigationGuidance | null {
   if (!route.steps.length || !usableSample(sample, now) || route.distanceMeters <= 0 || route.durationSeconds <= 0) return null;
   const projection = closestProjection(route, sample, previous);
   if (!projection) return null;
@@ -87,7 +89,7 @@ export function updateNavigation(route: Route, sample: LocationSample, previous?
 }
 export class NavigationEngine {
   private progress: NavigationProgress | undefined;
-  constructor(private readonly route: Route) {}
+  constructor(private readonly route: NavigationRoute) {}
   update(sample: LocationSample, now = Date.now()) {
     const result = updateNavigation(this.route, sample, this.progress, now);
     if (result) this.progress = result.progress;

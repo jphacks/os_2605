@@ -1,15 +1,17 @@
 ﻿import type { AdventureSettings, Category, DestinationCandidate } from "@/types/adventure";
-import { isCoordinates, parseAdventureSettings } from "@/features/adventure/validation";
+import { isCoordinates, isDestinationCandidate, parseAdventureSettings } from "@/features/adventure/validation";
 import { RoutingError } from "@/lib/routing/errors";
 import { record } from "@/lib/routing/validation";
+import roadsideStations from "@/data/roadside-stations.json";
 const filters: Record<Exclude<Category, "random">, string[]> = {
- scenery: ['[tourism=viewpoint]'], nature: ['[leisure=park][tourism]', '[leisure=nature_reserve]', '[natural=waterfall]'],
+ nature: ['[leisure=park][tourism]', '[leisure=nature_reserve]', '[natural=waterfall]', '[tourism=viewpoint]', '[natural=peak]'],
+ cafe: ['[amenity=cafe]'],
  history: ['[historic~"^(castle|ruins|monument|archaeological_site)$"]', '[amenity=place_of_worship][tourism]'],
  hot_spring: ['[amenity=public_bath]["bath:type"=hot_spring]', '[leisure=hot_spring]'],
  roadside_station: ['[highway=rest_area][name~"道の駅"]'],
 };
 const searchTerms: Record<Exclude<Category, "random">, string> = {
- scenery: "展望台", nature: "公園", history: "史跡", hot_spring: "温泉", roadside_station: "道の駅",
+ nature: "公園", cafe: "カフェ", history: "史跡", hot_spring: "温泉", roadside_station: "道の駅",
 };
 let nominatimQueue: Promise<void> = Promise.resolve();
 let lastNominatimRequest = 0;
@@ -76,8 +78,20 @@ async function searchNominatim(settings: AdventureSettings, request: typeof fetc
  }
  return results;
 }
+/** OSMでは取れない道の駅は、手作業で用意したJSONから探索範囲内のものを返す。 */
+export function manualCandidates(settings: AdventureSettings): DestinationCandidate[] {
+ if (settings.category !== "roadside_station") return [];
+ const box = searchBox(settings);
+ return (roadsideStations as unknown[]).filter(isDestinationCandidate).filter(c => c.isActive && c.category === "roadside_station" &&
+  c.location.lat >= box.south && c.location.lat <= box.north && c.location.lng >= box.west && c.location.lng <= box.east);
+}
 export async function searchDestinations(settings: AdventureSettings, request: typeof fetch = fetch): Promise<DestinationCandidate[]> {
  if (!parseAdventureSettings(settings)) throw new RoutingError("INVALID_INPUT", 400);
+ const manual = manualCandidates(settings);
+ const found = await searchOsm(settings, request).catch(error => { if (manual.length) return []; throw error; });
+ return [...manual, ...found.filter(c => !manual.some(m => m.id === c.id))];
+}
+async function searchOsm(settings: AdventureSettings, request: typeof fetch): Promise<DestinationCandidate[]> {
  const nominatimResults = await searchNominatim(settings, request);
  if (nominatimResults.length) return nominatimResults;
  const categories = settings.category === "random" ? Object.keys(filters) as Exclude<Category, "random">[] : [settings.category];
@@ -130,7 +144,7 @@ export async function searchDestinations(settings: AdventureSettings, request: t
   const id = `osm:${p.type}:${p.id}`;
   if (ids.has(id)) continue;
   ids.add(id);
-  const category = tags.tourism === "viewpoint" ? "scenery" : ["park", "nature_reserve"].includes(String(tags.leisure)) || tags.natural === "waterfall" ? "nature" :
+  const category = tags.amenity === "cafe" ? "cafe" : tags.tourism === "viewpoint" || tags.natural === "peak" || ["park", "nature_reserve"].includes(String(tags.leisure)) || tags.natural === "waterfall" ? "nature" :
    tags.highway === "rest_area" ? "roadside_station" : tags.leisure === "hot_spring" || tags["bath:type"] === "hot_spring" ? "hot_spring" : "history";
   if (settings.category !== "random" && settings.category !== category) continue;
   const openingHours = typeof tags.opening_hours === "string" ? tags.opening_hours.trim() : "";
