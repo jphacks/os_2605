@@ -1,0 +1,383 @@
+[
+  {
+    "id": "spot-001",
+    "name": "検証用スポット 01",
+    "category": "scenery",
+    "location": {
+      "lat": 34.9,
+      "lng": 135.6
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 90
+    }
+  },
+  {
+    "id": "spot-002",
+    "name": "検証用スポット 02",
+    "category": "scenery",
+    "location": {
+      "lat": 34.91,
+      "lng": 135.61
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 75
+    }
+  },
+  {
+    "id": "spot-003",
+    "name": "検証用スポット 03",
+    "category": "scenery",
+    "location": {
+      "lat": 34.92,
+      "lng": 135.62
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 105
+    }
+  },
+  {
+    "id": "spot-004",
+    "name": "検証用スポット 04",
+    "category": "scenery",
+    "location": {
+      "lat": 34.93,
+      "lng": 135.63
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 60
+    }
+  },
+  {
+    "id": "spot-005",
+    "name": "検証用スポット 05",
+    "category": "scenery",
+    "location": {
+      "lat": 34.94,
+      "lng": 135.64
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 106
+    }
+  },
+  {
+    "id": "spot-006",
+    "name": "検証用スポット 06",
+    "category": "nature",
+    "location": {
+      "lat": 34.95,
+      "lng": 135.65
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 30
+    }
+  },
+  {
+    "id": "spot-007",
+    "name": "検証用スポット 07",
+    "category": "nature",
+    "location": {
+      "lat": 34.96,
+      "lng": 135.66
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 120
+    }
+  },
+  {
+    "id": "spot-008",
+    "name": "検証用スポット 08",
+    "category": "history",
+    "location": {
+      "lat": 34.97,
+      "lng": 135.67
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 60
+    }
+  },
+  {
+    "id": "spot-009",
+    "name": "検証用スポット 09",
+    "category": "history",
+    "location": {
+      "lat": 34.98,
+      "lng": 135.68
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 74
+    }
+  },
+  {
+    "id": "spot-010",
+    "name": "検証用スポット 10",
+    "category": "hot_spring",
+    "location": {
+      "lat": 34.99,
+      "lng": 135.69
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 90
+    }
+  },
+  {
+    "id": "spot-011",
+    "name": "検証用スポット 11",
+    "category": "hot_spring",
+    "location": {
+      "lat": 35,
+      "lng": 135.7
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 45
+    }
+  },
+  {
+    "id": "spot-012",
+    "name": "検証用スポット 12",
+    "category": "roadside_station",
+    "location": {
+      "lat": 35.01,
+      "lng": 135.71
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 60
+    }
+  },
+  {
+    "id": "spot-013",
+    "name": "検証用スポット 13",
+    "category": "roadside_station",
+    "location": {
+      "lat": 35.02,
+      "lng": 135.72
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 30
+    }
+  },
+  {
+    "id": "spot-014",
+    "name": "検証用スポット 14",
+    "category": "scenery",
+    "location": {
+      "lat": 35.03,
+      "lng": 135.73
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": false,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 90
+    }
+  },
+  {
+    "id": "spot-015",
+    "name": "検証用スポット 15",
+    "category": "scenery",
+    "location": {
+      "lat": 35.04,
+      "lng": 135.74
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "always_open",
+      "note": "検証用データ（実在しない）"
+    },
+    "accessVerified": false,
+    "demoDurations": {
+      "demo-origin-a": 90
+    }
+  },
+  {
+    "id": "spot-016",
+    "name": "検証用スポット 16",
+    "category": "scenery",
+    "location": {
+      "lat": 35.05,
+      "lng": 135.75
+    },
+    "description": "開発確認用の架空データです。実在の場所ではありません。",
+    "imageUrl": "/images/placeholder.svg",
+    "supportedVehicles": [
+      "car",
+      "motorcycle"
+    ],
+    "isActive": true,
+    "openingInfo": {
+      "type": "unknown",
+      "note": "営業時間・立ち入り条件を確認できていない"
+    },
+    "accessVerified": true,
+    "demoDurations": {
+      "demo-origin-a": 90
+    }
+  }
+]
