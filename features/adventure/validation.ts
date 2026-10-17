@@ -103,6 +103,7 @@ export function isDestinationCandidate(
       openingInfo.type === "hours" ||
       openingInfo.type === "unknown") &&
     typeof value.accessVerified === "boolean" &&
+    (value.source === undefined || value.source === "openstreetmap" || value.source === "curated") &&
     (value.liveRoutingVerified === undefined || typeof value.liveRoutingVerified === "boolean") &&
     isRecord(demoDurations) &&
     Object.values(demoDurations).every(

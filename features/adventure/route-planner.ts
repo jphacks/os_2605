@@ -15,9 +15,11 @@ export async function prepareAdventure(
   if (!valid || (mode !== "demo" && mode !== "live")) throw new RoutingError("INVALID_INPUT", 400);
   if (mode === "live" && valid.vehicleType === "motorcycle") throw new RoutingError("UNSUPPORTED_VEHICLE");
   if (!candidates.every(isDestinationCandidate)) throw new RoutingError("INVALID_ROUTE");
-  const eligible = (candidates as DestinationCandidate[]).filter(s => s.isActive && s.accessVerified &&
-    s.openingInfo.type !== "unknown" && s.supportedVehicles.includes(valid.vehicleType) &&
-    (valid.category === "random" || s.category === valid.category) && (mode === "demo" || s.liveRoutingVerified === true));
+  const eligible = (candidates as DestinationCandidate[]).filter(s => s.isActive &&
+    (mode === "live" && (s.source === "openstreetmap" || s.source === "curated") || s.accessVerified && s.openingInfo.type !== "unknown") &&
+    s.supportedVehicles.includes(valid.vehicleType) &&
+    (valid.category === "random" || s.category === valid.category) &&
+    (mode === "demo" || s.source === "openstreetmap" || s.source === "curated" || s.liveRoutingVerified === true));
   if (!eligible.length) throw new RoutingError(mode === "live" ? "UNVERIFIED_DESTINATION" : "NO_ROUTE", 404);
   // Shuffle before limiting so later registered candidates are not permanently excluded.
   const randomIndex = (length: number) => {
@@ -46,6 +48,6 @@ export async function prepareAdventure(
   const origin = mode === "demo" ? DEMO_ORIGINS.find(o => o.location.lat === valid.origin.lat && o.location.lng === valid.origin.lng) : undefined;
   return { adventureId: crypto.randomUUID(), settings: valid,
     origin: origin ?? { id: "request-origin", label: "出発地点", location: valid.origin },
-    destinationId: chosen.destination.id, estimatedDurationMinutes: chosen.route.durationSeconds / 60,
+    destinationId: chosen.destination.id, destination: chosen.destination, estimatedDurationMinutes: chosen.route.durationSeconds / 60,
     route: chosen.route, status: "ready", mode };
 }

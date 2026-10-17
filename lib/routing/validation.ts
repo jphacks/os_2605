@@ -27,7 +27,8 @@ export function validateRoute(route: Route): Route {
   if (!Array.isArray(route.steps) || !route.steps.length) throw new RoutingError("MISSING_INSTRUCTIONS");
   const demo = route.mode === "demo" && route.provider === "demo-schematic" && route.geometryKind === "schematic" && route.mapCompatibility === "schematic-only";
   const live = route.mode === "live" && route.provider === "google-routes" && route.geometryKind === "road" && route.mapCompatibility === "google-maps";
-  if (!demo && !live) throw new RoutingError("INVALID_ROUTE");
+  const osm = route.mode === "live" && route.provider === "osrm" && route.geometryKind === "road" && route.mapCompatibility === "openstreetmap";
+  if (!demo && !live && !osm) throw new RoutingError("INVALID_ROUTE");
   let previousEnd: Route["origin"] | undefined;
   let distance = 0;
   let duration = 0;

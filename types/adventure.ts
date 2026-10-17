@@ -49,6 +49,8 @@ export type OpeningInfo = {
 
 /** 目的地の登録データ。名称・座標は通常UIへ渡さない。 */
 export type DestinationCandidate = {
+  source?: "openstreetmap" | "curated";
+  sourceUrl?: string;
   id: string;
   name: string;
   category: Exclude<Category, "random">;
@@ -92,6 +94,7 @@ export type AdventurePlan = {
   settings: AdventureSettings;
   origin: Origin;
   destinationId: string;
+  destination?: DestinationCandidate;
   estimatedDurationMinutes: number;
   status: AdventureStatus;
   mode: AdventureMode;
@@ -130,10 +133,10 @@ export type Route = {
   id: string;
   origin: Coordinates;
   destination: Coordinates;
-  provider: "demo-schematic" | "google-routes";
+  provider: "demo-schematic" | "google-routes" | "osrm";
   mode: AdventureMode;
   geometryKind: "schematic" | "road";
-  mapCompatibility: "schematic-only" | "google-maps";
+  mapCompatibility: "schematic-only" | "google-maps" | "openstreetmap";
   durationSeconds: number;
   distanceMeters: number;
   /** geometryKind が schematic の場合、実道路ではない検証用模式図。 */
