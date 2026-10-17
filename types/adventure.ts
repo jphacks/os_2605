@@ -72,3 +72,9 @@ export type AdventureStatus =
   | "revealed"
   | "cancelled"
   | "error";
+
+/** 条件入力段階。出発地点は目的地選択のIssueで設定する。 */
+export type AdventureSetupDraft = Pick<
+  AdventureSettings,
+  "vehicleType" | "durationMinutes" | "category"
+>;
