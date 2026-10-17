@@ -3,8 +3,10 @@ export const vehicleOptions = [
   { value: "motorcycle", label: "バイク" },
   { value: "car", label: "自動車" },
 ] satisfies { value: VehicleType; label: string }[];
-export const durationOptions = [30, 60, 90, 120].map((value) => ({
-  value: value as DurationMinutes,
+export const durationOptions = (
+  [30, 60, 90, 120] as const satisfies readonly DurationMinutes[]
+).map((value) => ({
+  value,
   label: `${value}分`,
 }));
 export const categoryOptions = [

@@ -10,7 +10,8 @@
     "build": "next build --webpack",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "test": "node --test tests/*.test.ts"
   },
   "dependencies": {
     "next": "16.4.2",
