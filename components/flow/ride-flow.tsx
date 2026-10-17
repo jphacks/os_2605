@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAdventure } from "@/components/adventure/plan-context";
 import { MessageScreen } from "@/components/screens/message-screen";
+import { RouteMapDialog } from "@/components/adventure/route-map-dialog";
 import { RidingScreen } from "@/components/screens/riding-screen";
 import {
   ARRIVAL_REQUEST_INTERVAL_MS,
@@ -36,6 +37,7 @@ function unusableLocationMessage(sample: LocationSample, now: number) {
 function Ride({ plan }: { plan: PublicAdventurePlan }) {
   const { setPlan, setRevealed } = useAdventure();
   const router = useRouter();
+  const [mapOpen, setMapOpen] = useState(false);
   const [guidance, setGuidance] = useState<NavigationGuidance | null>(null);
   const [notice, setNotice] = useState<string | null>("現在地を取得しています…");
   // 音声案内は初期ON（非対応のブラウザでは自動的にOFF）。
@@ -125,12 +127,16 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
   }
 
   return (
+    <>
     <RidingScreen
       view={toRidingView(guidance, plan.route.distanceMeters, notice)}
       voiceOn={voiceOn}
       onVoice={toggleVoice}
       onStop={stop}
+      onMap={() => setMapOpen(true)}
     />
+    {mapOpen && <RouteMapDialog route={plan.route} onClose={() => setMapOpen(false)} />}
+    </>
   );
 }
 

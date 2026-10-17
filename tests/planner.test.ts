@@ -1,3 +1,5 @@
+import { toPublicPlan } from "@/features/adventure/public-plan";
+import { unsealDestination } from "@/lib/seal";
 import { describe, expect, it, vi } from "vitest";
 import fixtures from "@/data/demoRoutes.json";
 import spots from "@/data/spots.json";
@@ -129,4 +131,18 @@ describe("planAdventure", () => {
       }),
     ).rejects.toMatchObject({ code: "INVALID_INPUT" });
   });
+});
+
+it("選択した目的地と経路を保持し、地図用形状は公開時も変更しない", async () => {
+  const plan = await planAdventure(settings, "demo", {
+    findCandidates: byGenre(everyGenre), provider, rng: createSeededRng("map-check"),
+  });
+  expect(plan.destination).toBeDefined();
+  expect(plan.destinationId).toBe(plan.destination!.id);
+  expect(plan.route!.destination).toEqual(plan.destination!.location);
+  const publicPlan = toPublicPlan(plan);
+  expect(publicPlan.route.geometry).toEqual(plan.route!.geometry);
+  expect(publicPlan.route.id).toBe(plan.route!.id);
+  expect(unsealDestination(publicPlan.sealedDestination)?.reveal.name).toBe(plan.destination!.name);
+  expect(publicPlan).not.toHaveProperty("destination");
 });
