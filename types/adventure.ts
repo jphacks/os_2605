@@ -1,13 +1,15 @@
-export type DurationMinutes = 30 | 60 | 90 | 120;
+/** ダイヤルの15分刻み。30〜120分。 */
+export type DurationMinutes = 30 | 45 | 60 | 75 | 90 | 105 | 120;
 
 export type VehicleType = "motorcycle" | "car";
 
+/** random はジャンル未指定。アプリ内部でジャンルを決めるときに使う。「絶景」は「自然」に含める。 */
 export type Category =
-  | "scenery"
+  | "roadside_station"
   | "nature"
+  | "cafe"
   | "history"
   | "hot_spring"
-  | "roadside_station"
   | "random";
 
 export type Coordinates = {
@@ -91,7 +93,7 @@ export type DestinationSelectionResult =
     }
   | { ok: false; errorCode: DestinationSelectionErrorCode };
 
-/** destinationId は内部状態。画面表示用データに目的地の名称・座標・画像を含めない。 */
+/** サーバー内部用。destination は到着前にクライアントへ渡さない。 */
 export type AdventurePlan = {
   adventureId: string;
   route?: Route;
@@ -157,3 +159,18 @@ export type AdventureStatus =
   | "revealed"
   | "cancelled"
   | "error";
+
+/** 経路のうち案内に必要な部分。目的地の座標フィールドは持たない。 */
+export type PublicRoute = Omit<Route, "destination">;
+
+/**
+ * クライアントへ返す冒険プラン。目的地の名称・座標・ジャンルは含めない。
+ * sealedDestination は到着判定と到着後の公開に使う、サーバーだけが開けられる封印データ。
+ */
+export type PublicAdventurePlan = Omit<
+  AdventurePlan,
+  "destination" | "destinationId" | "route"
+> & {
+  route: PublicRoute;
+  sealedDestination: string;
+};

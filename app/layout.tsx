@@ -1,51 +1,29 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { PlanProvider } from "@/components/adventure/plan-context";
 
+const notoSansJp = Noto_Sans_JP({
+  weight: ["700", "900"],
+  // 日本語の字形は unicode-range で分割配信される。latin だけを先読みしても効果が薄いため無効にする。
+  preload: false,
+  display: "swap",
+  variable: "--font-noto-sans-jp",
+});
+
 export const metadata: Metadata = {
-  title: { default: "謎の目的地ナビ", template: "%s | 謎の目的地ナビ" },
+  title: { default: "ミステリップ", template: "%s | ミステリップ" },
   description:
-    "時間は決める。行き先は決めない。気ままな冒険へ出かけるためのナビ。",
+    "時間は決める。行き先は決めない。到着するまで行き先が秘密の、小さな冒険。",
 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={notoSansJp.variable}>
       <body>
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:block focus:p-4"
-        >
-          本文へ移動
-        </a>
-        <header className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-6 sm:px-8">
-          <Link
-            href="/"
-            className="flex min-h-11 items-center gap-2 text-sm font-bold tracking-wide"
-          >
-            <span aria-hidden="true" className="text-2xl">
-              ↗
-            </span>{" "}
-            謎の目的地ナビ
-          </Link>
-          <span className="shrink-0 rounded-full border border-[#b8c5ac] px-3 py-1 text-xs">
-            開発中
-          </span>
-        </header>
-        <PlanProvider>
-          <main
-            id="main"
-            className="mx-auto min-h-[70vh] max-w-5xl px-5 pb-12 sm:px-8"
-          >
-            {children}
-          </main>
-        </PlanProvider>
-        <footer className="mx-auto max-w-5xl border-t border-[#d8dece] px-5 py-6 text-xs leading-6 text-[#546757] sm:px-8">
-          JPHACKS 2026 · 謎の目的地ナビ · 地図 © OpenStreetMap contributors · 経路 OSRM
-          <br />
-          道路標識・交通規制・現地の安全を最優先し、操作は安全な場所に停車して行ってください。
-        </footer>
+        <PlanProvider>{children}</PlanProvider>
       </body>
     </html>
   );

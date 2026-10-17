@@ -18,7 +18,7 @@ function settings(
   return {
     vehicleType: "motorcycle",
     durationMinutes: 90,
-    category: "scenery",
+    category: "nature",
     origin,
     ...overrides,
   };
@@ -31,7 +31,7 @@ function spot(
   return {
     id,
     name: `検証用${id}`,
-    category: "scenery",
+    category: "nature",
     location: { lat: 35, lng: 135 },
     description: "テスト用",
     imageUrl: "/images/placeholder.svg",
@@ -50,12 +50,12 @@ function errorOf(result: ReturnType<typeof selectDestination>) {
 
 describe("selectDestination", () => {
   it("ジャンルで絞り込む", () => {
-    const candidates = [spot("a"), spot("b", { category: "nature" })];
+    const candidates = [spot("a"), spot("b", { category: "history" })];
     const result = selectDestination(settings(), candidates, { originId });
     expect(result.ok && result.destination.id).toBe("a");
     expect(
       errorOf(
-        selectDestination(settings({ category: "history" }), candidates, {
+        selectDestination(settings({ category: "cafe" }), candidates, {
           originId,
         }),
       ),
@@ -63,7 +63,7 @@ describe("selectDestination", () => {
   });
 
   it("randomではジャンルで絞り込まない", () => {
-    const candidates = [spot("a"), spot("b", { category: "nature" })];
+    const candidates = [spot("a"), spot("b", { category: "history" })];
     const seen = new Set<string>();
     const rng = createSeededRng(1);
     for (let i = 0; i < 50; i += 1) {
@@ -187,7 +187,7 @@ describe("selectDestination", () => {
 
   it("不正な設定値を拒否する", () => {
     const bad = [
-      settings({ durationMinutes: 45 as never }),
+      settings({ durationMinutes: 50 as never }),
       settings({ vehicleType: "bicycle" as never }),
       settings({ category: "sea" as never }),
       settings({ origin: { lat: 91, lng: 0 } }),
@@ -224,7 +224,9 @@ describe("data/spots.json", () => {
     const ok = run(settings());
     expect(ok.ok && ok.candidateCount).toBe(3);
     expect(ok.ok && ok.destination.id).toMatch(/^spot-00[123]$/);
-    expect(errorOf(run(settings({ durationMinutes: 30 })))).toBe(
+    expect(
+      errorOf(run(settings({ category: "cafe", durationMinutes: 30 }))),
+    ).toBe(
       "NO_DURATION_MATCH",
     );
     const single = run(settings({ vehicleType: "car", durationMinutes: 60 }));

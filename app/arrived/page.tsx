@@ -1,5 +1,5 @@
-import { ArrivalResult } from "@/components/adventure/arrival-result";
-export const metadata = { title: "目的地公開" };
+import { ArrivedFlow } from "@/components/flow/arrived-flow";
+export const metadata = { title: "到着" };
 export default function ArrivedPage() {
-  return <ArrivalResult />;
+  return <ArrivedFlow />;
 }

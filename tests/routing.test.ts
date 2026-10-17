@@ -16,7 +16,7 @@ const candidates = (spots as unknown[]).filter(isDestinationCandidate);
 const destination = candidates[0];
 const origin = { lat: 35, lng: 135.75 };
 const input = { origin, destination, vehicleType: "car" as const };
-const settings: AdventureSettings = { origin, vehicleType: "car", durationMinutes: 90, category: "scenery" };
+const settings: AdventureSettings = { origin, vehicleType: "car", durationMinutes: 90, category: "nature" };
 const googleInput = { ...input, origin: { lat: 38.5, lng: -120.2 }, destination: { ...destination, location: { lat: 43.252, lng: -126.453 } } };
 const liveInput = { ...googleInput, destination: { ...googleInput.destination, liveRoutingVerified: true } };
 const loc = (latitude: number, longitude: number) => ({ latLng: { latitude, longitude } });
