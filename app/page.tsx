@@ -21,7 +21,7 @@ export default function HomePage() {
           </p>
           <ActionLink href="/setup">冒険を始める</ActionLink>
           <p className="mt-3 text-xs text-[#546757]">
-            現在は条件を選ぶ画面まで体験できます。
+          現在は条件の選択・保存まで体験できます。
           </p>
         </div>
         <div

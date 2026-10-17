@@ -10,9 +10,10 @@
 
 - トップ画面から条件入力画面へ移動する。
 - バイク／自動車、30・60・90・120分、6種類のジャンルを選択する。
+- 条件の確定・確認・再編集を行い、同じタブの再読み込み後に復元する。
 - ナビ画面と到着画面のレイアウトを確認する。
 
-現在は初期構築段階です。冒険開始ボタンは無効で、目的地の決定や実際の案内は行いません。選択内容は画面内のReact stateで保持し、画面を離れるとリセットされます。ナビ・到着画面には実際の経路や到着実績を表示しません。
+条件入力・確認・保存まで実装済みです。冒険開始ボタンは無効で、目的地の決定や実際の案内は行いません。確定前の編集はReact stateで保持し、確定時だけsessionStorageへ保存します。ナビ・到着画面には実際の経路や到着実績を表示しません。
 
 ## 使用技術・開発環境
 
@@ -57,6 +58,7 @@ cp .env.example .env.local
 ## 確認・ビルド
 
 ```sh
+npm test
 npm run lint
 npm run typecheck
 npm run build
@@ -64,14 +66,14 @@ npm run build
 npm start
 ```
 
-`typecheck`はNext.jsのルート型を生成してからTypeScriptを検査します。現時点では業務ロジックがなく、自動ユニットテストは未導入です。後続Issueで目的地選択・ナビ・到着判定の振る舞いに対するテストを追加します。
+`typecheck`はNext.jsのルート型を生成してからTypeScriptを検査します。`npm test`はNode.js 24の標準テストランナーで条件検証・保存復元・不正JSON・保存拒否・SSRを検証します。外部テストライブラリは不要です。ブラウザUIの自動テストは未導入です。
 
 ### 画面の確認手順
 
 | URL | 確認内容 |
 | --- | --- |
 | `/` | 製品名と説明、「冒険を始める」から`/setup`への遷移 |
-| `/setup` | 各選択肢の操作、選択状態の表示、開始ボタンが無効であること |
+| `/setup` | 未入力時の確定無効化、単一選択、確定・確認・再編集、再読み込みでの復元 |
 | `/adventure` | 案内・残り時間・表示切り替え・中断の領域と未実装表示 |
 | `/arrived` | 到着画面のプレビュー表示、実績がない旨、トップへ戻る操作 |
 
@@ -84,13 +86,27 @@ app/                    # 4画面と共通レイアウト
 components/layout/      # ページ見出し
 components/ui/          # 共通リンク
 components/adventure/   # 条件入力UI
-features/adventure/     # 選択肢の定義
+features/adventure/     # 選択肢・入力検証・保存復元
 lib/location/           # GPS／デモ共通のLocationProviderインターフェース
 types/                  # 仕様書に対応する基本型
+tests/                  # 条件検証と保存復元の単体テスト
 .github/                # Issue・PRテンプレート
 ```
 
-Route HandlersはAPI実装時に`app/api/`へ追加します。`lib/routing/`、`lib/navigation/`、`data/`、`public/images/`、`tests/`も利用する機能の実装時に追加し、不要な空ディレクトリは作成しません。
+Route HandlersはAPI実装時に`app/api/`へ追加します。`lib/routing/`、`lib/navigation/`、`data/`、`public/images/`も利用する機能の実装時に追加し、不要な空ディレクトリは作成しません。
+
+## 条件入力の保存契約
+
+- キー：`mystery-navi:adventure-setup:v1`
+- データ：`AdventureSetupDraft`（`vehicleType`、数値の`durationMinutes`、`category`）。出発地点は含みません。
+- 共通関数：`features/adventure/setup-storage.ts`の`parseSetupDraft`、`loadSetupDraft`、`saveSetupDraft`。
+- 確定時に許可された値か再検証して保存し、成功した場合だけ確認画面を表示します。
+- 再読み込み時は保存値を入力画面に復元します。編集中に離脱すると最後に確定した値に戻ります。
+- 壊れたJSON・無効値は無視して再入力を案内します。読み書きが制限されている場合はその旨を表示し、書き込み失敗時は確認画面へ進みません。
+- 保存期間はタブセッションに従います。永続保存や他タブとの同期は行いません。
+- 後続機能は保存値を再検証し、別途取得する出発地点と組み合わせて`AdventureSettings`を構成してください。
+
+手動確認では、全条件の選択→確定→条件変更→再確定→再読み込みを試してください。開発者ツールで上記キーに不正なJSONを入れた場合も画面が停止しないこと、保存を制限した環境では成功表示にならないことを確認してください。
 
 ## 今後の実装
 
