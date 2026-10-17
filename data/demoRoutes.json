@@ -1,0 +1,1058 @@
+[
+  {
+    "id": "demo-spot-001",
+    "destinationId": "spot-001",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.9,
+      "lng": 135.6
+    },
+    "distanceMeters": 45000,
+    "durationSeconds": 5400,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.6
+      },
+      {
+        "lat": 34.9,
+        "lng": 135.6
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-001-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.6
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-001-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.6
+        },
+        "endLocation": {
+          "lat": 34.9,
+          "lng": 135.6
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 22500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-002",
+    "destinationId": "spot-002",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.91,
+      "lng": 135.61
+    },
+    "distanceMeters": 37500,
+    "durationSeconds": 4500,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.61
+      },
+      {
+        "lat": 34.91,
+        "lng": 135.61
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-002-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.61
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 18750,
+        "durationSeconds": 2250,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-002-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.61
+        },
+        "endLocation": {
+          "lat": 34.91,
+          "lng": 135.61
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 18750,
+        "durationSeconds": 2250,
+        "distanceFromOriginMeters": 18750
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-003",
+    "destinationId": "spot-003",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.92,
+      "lng": 135.62
+    },
+    "distanceMeters": 52500,
+    "durationSeconds": 6300,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.62
+      },
+      {
+        "lat": 34.92,
+        "lng": 135.62
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-003-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.62
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 26250,
+        "durationSeconds": 3150,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-003-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.62
+        },
+        "endLocation": {
+          "lat": 34.92,
+          "lng": 135.62
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 26250,
+        "durationSeconds": 3150,
+        "distanceFromOriginMeters": 26250
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-004",
+    "destinationId": "spot-004",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.93,
+      "lng": 135.63
+    },
+    "distanceMeters": 30000,
+    "durationSeconds": 3600,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.63
+      },
+      {
+        "lat": 34.93,
+        "lng": 135.63
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-004-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.63
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-004-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.63
+        },
+        "endLocation": {
+          "lat": 34.93,
+          "lng": 135.63
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 15000
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-005",
+    "destinationId": "spot-005",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.94,
+      "lng": 135.64
+    },
+    "distanceMeters": 53000,
+    "durationSeconds": 6360,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.64
+      },
+      {
+        "lat": 34.94,
+        "lng": 135.64
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-005-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.64
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 26500,
+        "durationSeconds": 3180,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-005-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.64
+        },
+        "endLocation": {
+          "lat": 34.94,
+          "lng": 135.64
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 26500,
+        "durationSeconds": 3180,
+        "distanceFromOriginMeters": 26500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-006",
+    "destinationId": "spot-006",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.95,
+      "lng": 135.65
+    },
+    "distanceMeters": 15000,
+    "durationSeconds": 1800,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.65
+      },
+      {
+        "lat": 34.95,
+        "lng": 135.65
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-006-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.65
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 7500,
+        "durationSeconds": 900,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-006-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.65
+        },
+        "endLocation": {
+          "lat": 34.95,
+          "lng": 135.65
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 7500,
+        "durationSeconds": 900,
+        "distanceFromOriginMeters": 7500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-007",
+    "destinationId": "spot-007",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.96,
+      "lng": 135.66
+    },
+    "distanceMeters": 60000,
+    "durationSeconds": 7200,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.66
+      },
+      {
+        "lat": 34.96,
+        "lng": 135.66
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-007-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.66
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 30000,
+        "durationSeconds": 3600,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-007-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.66
+        },
+        "endLocation": {
+          "lat": 34.96,
+          "lng": 135.66
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 30000,
+        "durationSeconds": 3600,
+        "distanceFromOriginMeters": 30000
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-008",
+    "destinationId": "spot-008",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.97,
+      "lng": 135.67
+    },
+    "distanceMeters": 30000,
+    "durationSeconds": 3600,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.67
+      },
+      {
+        "lat": 34.97,
+        "lng": 135.67
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-008-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.67
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-008-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.67
+        },
+        "endLocation": {
+          "lat": 34.97,
+          "lng": 135.67
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 15000
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-009",
+    "destinationId": "spot-009",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.98,
+      "lng": 135.68
+    },
+    "distanceMeters": 37000,
+    "durationSeconds": 4440,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.68
+      },
+      {
+        "lat": 34.98,
+        "lng": 135.68
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-009-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.68
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 18500,
+        "durationSeconds": 2220,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-009-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.68
+        },
+        "endLocation": {
+          "lat": 34.98,
+          "lng": 135.68
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 18500,
+        "durationSeconds": 2220,
+        "distanceFromOriginMeters": 18500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-010",
+    "destinationId": "spot-010",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 34.99,
+      "lng": 135.69
+    },
+    "distanceMeters": 45000,
+    "durationSeconds": 5400,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.69
+      },
+      {
+        "lat": 34.99,
+        "lng": 135.69
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-010-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.69
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-010-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.69
+        },
+        "endLocation": {
+          "lat": 34.99,
+          "lng": 135.69
+        },
+        "maneuver": "TURN_LEFT",
+        "instruction": "デモ模式図：左折",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 22500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-011",
+    "destinationId": "spot-011",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35,
+      "lng": 135.7
+    },
+    "distanceMeters": 22500,
+    "durationSeconds": 2700,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.7
+      },
+      {
+        "lat": 35,
+        "lng": 135.7
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-011-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.7
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 11250,
+        "durationSeconds": 1350,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-011-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.7
+        },
+        "endLocation": {
+          "lat": 35,
+          "lng": 135.7
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 11250,
+        "durationSeconds": 1350,
+        "distanceFromOriginMeters": 11250
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-012",
+    "destinationId": "spot-012",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35.01,
+      "lng": 135.71
+    },
+    "distanceMeters": 30000,
+    "durationSeconds": 3600,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.71
+      },
+      {
+        "lat": 35.01,
+        "lng": 135.71
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-012-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.71
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-012-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.71
+        },
+        "endLocation": {
+          "lat": 35.01,
+          "lng": 135.71
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 15000,
+        "durationSeconds": 1800,
+        "distanceFromOriginMeters": 15000
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-013",
+    "destinationId": "spot-013",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35.02,
+      "lng": 135.72
+    },
+    "distanceMeters": 15000,
+    "durationSeconds": 1800,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.72
+      },
+      {
+        "lat": 35.02,
+        "lng": 135.72
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-013-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.72
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 7500,
+        "durationSeconds": 900,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-013-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.72
+        },
+        "endLocation": {
+          "lat": 35.02,
+          "lng": 135.72
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 7500,
+        "durationSeconds": 900,
+        "distanceFromOriginMeters": 7500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-014",
+    "destinationId": "spot-014",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35.03,
+      "lng": 135.73
+    },
+    "distanceMeters": 45000,
+    "durationSeconds": 5400,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.73
+      },
+      {
+        "lat": 35.03,
+        "lng": 135.73
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-014-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.73
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-014-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.73
+        },
+        "endLocation": {
+          "lat": 35.03,
+          "lng": 135.73
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 22500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-015",
+    "destinationId": "spot-015",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35.04,
+      "lng": 135.74
+    },
+    "distanceMeters": 45000,
+    "durationSeconds": 5400,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.74
+      },
+      {
+        "lat": 35.04,
+        "lng": 135.74
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-015-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.74
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-015-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.74
+        },
+        "endLocation": {
+          "lat": 35.04,
+          "lng": 135.74
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 22500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  },
+  {
+    "id": "demo-spot-016",
+    "destinationId": "spot-016",
+    "origin": {
+      "lat": 35.0,
+      "lng": 135.75
+    },
+    "destination": {
+      "lat": 35.05,
+      "lng": 135.75
+    },
+    "distanceMeters": 45000,
+    "durationSeconds": 5400,
+    "geometry": [
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.0,
+        "lng": 135.75
+      },
+      {
+        "lat": 35.05,
+        "lng": 135.75
+      }
+    ],
+    "steps": [
+      {
+        "id": "spot-016-step-0",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "maneuver": "STRAIGHT",
+        "instruction": "デモ模式図：直進",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 0
+      },
+      {
+        "id": "spot-016-step-1",
+        "location": {
+          "lat": 35.0,
+          "lng": 135.75
+        },
+        "endLocation": {
+          "lat": 35.05,
+          "lng": 135.75
+        },
+        "maneuver": "TURN_RIGHT",
+        "instruction": "デモ模式図：右折",
+        "distanceMeters": 22500,
+        "durationSeconds": 2700,
+        "distanceFromOriginMeters": 22500
+      }
+    ],
+    "provider": "demo-schematic",
+    "mode": "demo",
+    "geometryKind": "schematic",
+    "mapCompatibility": "schematic-only"
+  }
+]

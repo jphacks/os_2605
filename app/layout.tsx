@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import "./globals.css";
+import { PlanProvider } from "@/components/adventure/plan-context";
 
 export const metadata: Metadata = {
   title: { default: "謎の目的地ナビ", template: "%s | 謎の目的地ナビ" },
@@ -32,12 +33,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             開発中
           </span>
         </header>
-        <main
-          id="main"
-          className="mx-auto min-h-[70vh] max-w-5xl px-5 pb-12 sm:px-8"
-        >
-          {children}
-        </main>
+        <PlanProvider>
+          <main
+            id="main"
+            className="mx-auto min-h-[70vh] max-w-5xl px-5 pb-12 sm:px-8"
+          >
+            {children}
+          </main>
+        </PlanProvider>
         <footer className="mx-auto max-w-5xl border-t border-[#d8dece] px-5 py-6 text-xs leading-6 text-[#546757] sm:px-8">
           JPHACKS 2026 · 謎の目的地ナビ
           <br />
