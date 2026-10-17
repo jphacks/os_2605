@@ -146,41 +146,42 @@ describe("route based selection", () => {
     mismatch.getRoute.mockResolvedValueOnce(await timedProvider(900).getRoute());
     await expect(prepareAdventure(settings, "demo", [fakeCandidate("a"), fakeCandidate("b")], mismatch, () => 0)).resolves.toMatchObject({ status: "ready" });
   });
-  it("fails safely for no data, API outage and motorcycles in live mode", async () => {
+  it("fails safely for no data and API outages, and accepts motorcycles in live mode", async () => {
     await expect(prepareAdventure(settings, "demo", [], timedProvider(5400))).rejects.toMatchObject({ code: "NO_ROUTE" });
     const provider = { getRoute: vi.fn().mockRejectedValue(new RoutingError("AUTH_ERROR")) };
     await expect(prepareAdventure(settings, "demo", [destination], provider)).rejects.toMatchObject({ code: "AUTH_ERROR" });
-    await expect(prepareAdventure({ ...settings, vehicleType: "motorcycle" }, "live", candidates, provider)).rejects.toMatchObject({ code: "UNSUPPORTED_VEHICLE" });
+    const motorcycleDestination = { ...destination, source: "openstreetmap" as const, supportedVehicles: ["motorcycle" as const] };
+    const motorcycleRoute = structuredClone(fixtures[0]) as Route;
+    Object.assign(motorcycleRoute, { mode: "live", provider: "osrm", geometryKind: "road", mapCompatibility: "openstreetmap" });
+    await expect(prepareAdventure({ ...settings, vehicleType: "motorcycle" }, "live", [motorcycleDestination], { getRoute: async () => motorcycleRoute }, () => 0)).resolves.toMatchObject({ status: "ready" });
   });
 });
 describe("Route Handlers", () => {
   const body = { origin, destinationId: destination.id, vehicleType: "car", mode: "demo" };
-  it("returns the normalized route without caching", async () => {
+  it("rejects the demo route endpoint instead of returning schematic geometry", async () => {
     const response = await routesPost(request(body));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(400);
     expect(response.headers.get("Cache-Control")).toBe("no-store");
-    expect(await response.json()).toMatchObject({ routeId: "demo-spot-001", provider: "demo-schematic", durationSeconds: 5400 });
+    expect(await response.json()).toMatchObject({ error: { code: "INVALID_INPUT" } });
   });
   it.each([{}, { ...body, origin: { lat: 91, lng: 0 } }, { ...body, vehicleType: "bicycle" }, { ...body, mode: "oops" }, null])("validates input %j", async value => {
     expect((await routesPost(request(value))).status).toBe(400);
   });
   it("rejects invalid JSON and unregistered destinations", async () => {
     expect((await routesPost(new Request("http://localhost", { method: "POST", body: "{" }))).status).toBe(400);
-    const response = await routesPost(request({ ...body, destinationId: "https://example.com" }));
+    const response = await routesPost(request({ ...body, mode: "live", destinationId: "https://example.com" }));
     expect(response.status).toBe(404);
     expect(await response.json()).toMatchObject({ error: { code: "UNKNOWN_DESTINATION" } });
     expect(() => parseRouteRequest({ ...body, origin: { lat: NaN, lng: 0 } })).toThrow(RoutingError);
   });
-  it("does not return demo data on a live failure", async () => {
+  it("does not return demo data for an unknown live motorcycle destination", async () => {
     const response = await routesPost(request({ ...body, mode: "live", vehicleType: "motorcycle" }));
-    expect(response.status).toBe(422);
-    expect(await response.json()).toMatchObject({ error: { code: "UNSUPPORTED_VEHICLE" } });
+    expect(response.status).toBe(404);
+    expect(await response.json()).toMatchObject({ error: { code: "UNKNOWN_DESTINATION" } });
   });
-  it("prepares an adventure and attaches the selected route", async () => {
+  it("rejects adventure demo requests instead of preparing fake data", async () => {
     const response = await adventuresPost(request({ mode: "demo", settings }));
-    expect(response.status).toBe(200);
-    const { plan } = await response.json();
-    expect(plan.route.id).toBe(`demo-${plan.destinationId}`);
-    expect(plan.estimatedDurationMinutes).toBe(plan.route.durationSeconds / 60);
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ error: { code: "INVALID_INPUT" } });
   });
 });

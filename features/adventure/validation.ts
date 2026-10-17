@@ -93,6 +93,7 @@ export function isDestinationCandidate(
     value.category !== "random" &&
     isCategory(value.category) &&
     isCoordinates(value.location) &&
+    (value.arrivalLocation === undefined || isCoordinates(value.arrivalLocation)) &&
     typeof value.description === "string" &&
     typeof value.imageUrl === "string" &&
     Array.isArray(supportedVehicles) &&
@@ -104,6 +105,7 @@ export function isDestinationCandidate(
       openingInfo.type === "unknown") &&
     typeof value.accessVerified === "boolean" &&
     (value.source === undefined || value.source === "openstreetmap" || value.source === "curated") &&
+    (value.sourceUrl === undefined || typeof value.sourceUrl === "string") &&
     (value.liveRoutingVerified === undefined || typeof value.liveRoutingVerified === "boolean") &&
     isRecord(demoDurations) &&
     Object.values(demoDurations).every(

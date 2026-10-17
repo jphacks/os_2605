@@ -13,7 +13,6 @@ export async function prepareAdventure(
 ): Promise<AdventurePlan> {
   const valid = parseAdventureSettings(settings);
   if (!valid || (mode !== "demo" && mode !== "live")) throw new RoutingError("INVALID_INPUT", 400);
-  if (mode === "live" && valid.vehicleType === "motorcycle") throw new RoutingError("UNSUPPORTED_VEHICLE");
   if (!candidates.every(isDestinationCandidate)) throw new RoutingError("INVALID_ROUTE");
   const eligible = (candidates as DestinationCandidate[]).filter(s => s.isActive &&
     (mode === "live" && (s.source === "openstreetmap" || s.source === "curated") || s.accessVerified && s.openingInfo.type !== "unknown") &&

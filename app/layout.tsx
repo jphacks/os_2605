@@ -42,9 +42,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </main>
         </PlanProvider>
         <footer className="mx-auto max-w-5xl border-t border-[#d8dece] px-5 py-6 text-xs leading-6 text-[#546757] sm:px-8">
-          JPHACKS 2026 · 謎の目的地ナビ
+          JPHACKS 2026 · 謎の目的地ナビ · 地図 © OpenStreetMap contributors · 経路 OSRM
           <br />
-          現在は画面の土台です。実走行用の案内は行いません。
+          道路標識・交通規制・現地の安全を最優先し、操作は安全な場所に停車して行ってください。
         </footer>
       </body>
     </html>
