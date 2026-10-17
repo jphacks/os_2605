@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { ArrivalDetector, NavigationEngine, detectArrival, distanceMeters, usableArrivalSample, usableSample } from "@/lib/navigation/engine";
+import { ArrivalDetector, NavigationEngine, approachSpeed, detectArrival, distanceMeters, usableArrivalSample, usableSample } from "@/lib/navigation/engine";
 import { normalizeGeolocationTimestamp, TestLocationProvider } from "@/lib/navigation/location-provider";
 import realSpots from "@/data/real-spots.json";
 import { isDestinationCandidate } from "@/features/adventure/validation";
@@ -81,5 +81,14 @@ describe("navigation", () => {
   it("keeps curated real destinations structurally valid", () => {
     expect(realSpots.every(isDestinationCandidate)).toBe(true);
     expect(realSpots.every(spot => spot.source === "curated" && !spot.accessVerified)).toBe(true);
+  });
+});
+
+describe("approach speed for voice guidance", () => {
+  it("案内地点の手前の区間の速度を使い、なければ経路全体の平均を使う", () => {
+    const guidance = new NavigationEngine(route).update(sample(Date.now()), Date.now());
+    const road = route.steps[(guidance?.stepIndex ?? 1) - 1];
+    expect(guidance?.approachSpeedMetersPerSecond).toBeCloseTo(road.distanceMeters / road.durationSeconds);
+    expect(approachSpeed(route, 0)).toBeCloseTo(route.distanceMeters / route.durationSeconds);
   });
 });

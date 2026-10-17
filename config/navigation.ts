@@ -7,8 +7,14 @@ export const NAVIGATION_CONFIG = {
   stepPassToleranceMeters: 25,
   allowedProgressRegressionMeters: 60,
   regressionConfirmationCount: 2,
+  // 速度が分からないときの読み上げ距離。通常は経路の速度から求める（voiceLead*）。
   voiceEarlyMeters: 300,
   voiceNearMeters: 80,
+  // 曲がり角の何秒前に読み上げるか。距離=速度×秒数を、下の範囲に収める。
+  voiceEarlyLeadSeconds: 20,
+  voiceNearLeadSeconds: 6,
+  voiceEarlyRangeMeters: [150, 800],
+  voiceNearRangeMeters: [40, 250],
 } as const;
 
 export const ARRIVAL_CONFIG = {

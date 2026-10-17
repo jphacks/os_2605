@@ -28,6 +28,8 @@ export type NavigationGuidance = {
   distanceToStepMeters: number;
   remainingDistanceMeters: number;
   remainingDurationSeconds: number;
+  /** 次の案内地点へ向かう道の想定速度(m/s)。経路の所要時間と距離から求める。読み上げの距離の決定に使う。 */
+  approachSpeedMetersPerSecond?: number;
   progress: NavigationProgress;
 };
 type Projection = { distance: number; progress: number; segment: number };
@@ -66,6 +68,12 @@ function nextStep(route: NavigationRoute, progressMeters: number) {
   const stepIndex = index >= 0 ? index : route.steps.length - 1;
   return { step: route.steps[stepIndex], stepIndex };
 }
+/** 案内地点の手前の区間の想定速度。区間の情報が使えなければ経路全体の平均。 */
+export function approachSpeed(route: NavigationRoute, stepIndex: number) {
+  const road = route.steps[stepIndex - 1];
+  const speed = road && road.durationSeconds > 0 ? road.distanceMeters / road.durationSeconds : route.distanceMeters / route.durationSeconds;
+  return Number.isFinite(speed) && speed > 0 ? speed : undefined;
+}
 export function updateNavigation(route: NavigationRoute, sample: LocationSample, previous?: NavigationProgress, now = Date.now()): NavigationGuidance | null {
   if (!route.steps.length || !usableSample(sample, now) || route.distanceMeters <= 0 || route.durationSeconds <= 0) return null;
   const projection = closestProjection(route, sample, previous);
@@ -84,6 +92,7 @@ export function updateNavigation(route: NavigationRoute, sample: LocationSample,
     distanceToStepMeters: Math.max(0, Math.round(Math.max(progressMeters, step.distanceFromOriginMeters) - progressMeters)),
     remainingDistanceMeters: Math.round(remainingDistanceMeters),
     remainingDurationSeconds: Math.max(0, Math.round(route.durationSeconds * remainingDistanceMeters / route.distanceMeters)),
+    approachSpeedMetersPerSecond: approachSpeed(route, stepIndex),
     progress: { progressMeters, geometryIndex: projection.segment, stepIndex, regressionCount },
   };
 }
