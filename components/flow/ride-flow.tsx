@@ -16,7 +16,7 @@ import {
   type NavigationGuidance,
 } from "@/lib/navigation/engine";
 import { GPSLocationProvider } from "@/lib/navigation/location-provider";
-import { createAnnouncement, SpeechService } from "@/lib/speech";
+import { SpeechService } from "@/lib/speech";
 import type { LocationSample, PublicAdventurePlan } from "@/types/adventure";
 
 function unusableLocationMessage(sample: LocationSample, now: number) {
@@ -38,8 +38,13 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
   const router = useRouter();
   const [guidance, setGuidance] = useState<NavigationGuidance | null>(null);
   const [notice, setNotice] = useState<string | null>("現在地を取得しています…");
-  const [voiceOn, setVoiceOn] = useState(false);
-  const [speech] = useState(() => new SpeechService());
+  // 音声案内は初期ON（非対応のブラウザでは自動的にOFF）。
+  const [speech] = useState(() => {
+    const service = new SpeechService();
+    service.setEnabled(true);
+    return service;
+  });
+  const [voiceOn, setVoiceOn] = useState(() => speech.isEnabled());
 
   useEffect(() => {
     const engine = new NavigationEngine(plan.route);
@@ -64,7 +69,7 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
         } else {
           setGuidance(next);
           setNotice(null);
-          speech.announce(createAnnouncement(plan.route.id, next));
+          speech.announceGuidance(plan.route.id, next);
         }
         // 目的地の座標は持たないため、到着の確認はサーバーに任せる。
         if (inFlight || now - lastSent < ARRIVAL_REQUEST_INTERVAL_MS) return;
@@ -101,7 +106,7 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
     return () => {
       done = true;
       provider.stop();
-      speech.dispose();
+      speech.reset();
     };
   }, [plan, speech, router, setRevealed]);
 
