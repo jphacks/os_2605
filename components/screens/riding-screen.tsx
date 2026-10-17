@@ -69,7 +69,7 @@ export type RidingView = {
 };
 
 /** design-ref/screens/05_riding.html。残り時間と次の曲がり角だけを表示し、目的地は出さない。 */
-export function RidingScreen({ view, voiceOn, onVoice, onStop }: { view: RidingView; voiceOn: boolean; onVoice: () => void; onStop: () => void }) {
+export function RidingScreen({ view, voiceOn, onVoice, onStop, onMap }: { view: RidingView; voiceOn: boolean; onVoice: () => void; onStop: () => void; onMap: () => void }) {
   return (
     <ScreenFrame background="var(--deep)" label="走行中" live>
       <svg className="abs" width="390" height="844" style={{ left: "0", top: "0" }}>
@@ -101,8 +101,8 @@ export function RidingScreen({ view, voiceOn, onVoice, onStop }: { view: RidingV
             <path d="M19 6.5 Q22.5 12 19 17.5" />
           </svg>
         </Control>
-        {/* 目的地を明かす操作は未実装。モックにある要素のため、無効のまま表示する。 */}
-        <Control label="行き先" disabled>
+        {/* 3段階の確認後、取得済み経路のマップを表示する。 */}
+        <Control label="行き先" onClick={onMap}>
           <svg {...icon}>
             <path d="M2 12 Q12 3 22 12 Q12 21 2 12 Z" />
             <circle cx="12" cy="12" r="3" />
