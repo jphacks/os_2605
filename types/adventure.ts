@@ -27,12 +27,14 @@ export type Spot = {
   name: string;
   category: Exclude<Category, "random">;
   location: Coordinates;
+  /** 施設中心とは別に検証した到着判定地点。未設定時はlocationを使う。 */
+  arrivalLocation?: Coordinates;
   description: string;
   imageUrl: string;
   verified: boolean;
 };
 
-/** demo: 固定出発地点とデモ用推定時間を使う。live: 将来のGPS連携用（未実装）。 */
+/** demo は後方互換のデータ型。利用者向け経路生成は実データを使う live のみ。 */
 export type AdventureMode = "demo" | "live";
 
 export type Origin = {
@@ -55,6 +57,8 @@ export type DestinationCandidate = {
   name: string;
   category: Exclude<Category, "random">;
   location: Coordinates;
+  /** 施設中心とは別に到着判定へ使用する検証済み地点。 */
+  arrivalLocation?: Coordinates;
   description: string;
   imageUrl: string;
   /** データ上の対応想定。実道路の通行安全性を保証しない。 */

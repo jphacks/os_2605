@@ -6,7 +6,9 @@ export async function POST(request: Request) {
   try {
     let body: unknown;
     try { body = await request.json(); } catch { throw new RoutingError("INVALID_INPUT", 400); }
-    const route = await getRegisteredRoute(parseRouteRequest(body));
+    const input = parseRouteRequest(body);
+    if (input.mode !== "live") throw new RoutingError("INVALID_INPUT", 400);
+    const route = await getRegisteredRoute(input);
     return Response.json({ ...route, routeId: route.id }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) { return routingErrorResponse(error); }
 }

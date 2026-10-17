@@ -16,11 +16,10 @@ export function createRoutingProvider(mode: AdventureMode): RoutingProvider {
   return mode === "demo" ? new DemoRoutingProvider() : new OsrmRoutingProvider();
 }
 export async function getRegisteredRoute(input: RouteApiRequest): Promise<Route> {
-  if (input.mode === "live" && input.vehicleType === "motorcycle") throw new RoutingError("UNSUPPORTED_VEHICLE");
-  const destinations = input.mode === "live" ? realSpots as DestinationCandidate[] : registeredDestinations();
+  if (input.mode !== "live") throw new RoutingError("INVALID_INPUT", 400);
+  const destinations = realSpots as DestinationCandidate[];
   const destination = destinations.find(s => s.id === input.destinationId && s.isActive);
   if (!destination) throw new RoutingError("UNKNOWN_DESTINATION", 404);
   if (!destination.supportedVehicles.includes(input.vehicleType)) throw new RoutingError("UNSUPPORTED_VEHICLE");
-  if (input.mode === "demo" && (!destination.accessVerified || destination.openingInfo.type === "unknown")) throw new RoutingError("UNVERIFIED_DESTINATION");
-  return validateRoute(await createRoutingProvider(input.mode).getRoute({ origin: input.origin, destination, vehicleType: input.vehicleType }));
+  return validateRoute(await new OsrmRoutingProvider().getRoute({ origin: input.origin, destination, vehicleType: input.vehicleType }));
 }

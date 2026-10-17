@@ -55,7 +55,7 @@ export function adaptOsrmRoute(payload: unknown, input: RouteRequest): Route {
 export class OsrmRoutingProvider implements RoutingProvider {
   constructor(private request: typeof fetch = fetch) {}
   async getRoute(input: RouteRequest): Promise<Route> {
-    if (input.vehicleType !== "car") throw new RoutingError("UNSUPPORTED_VEHICLE");
+    if (input.vehicleType !== "car" && input.vehicleType !== "motorcycle") throw new RoutingError("UNSUPPORTED_VEHICLE");
     if (!["openstreetmap", "curated"].includes(input.destination.source ?? "")) throw new RoutingError("UNVERIFIED_DESTINATION");
     await reserveSlot();
     const { origin, destination } = input;

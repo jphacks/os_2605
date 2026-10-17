@@ -4,7 +4,7 @@
     "location": { "lat": 35.1222, "lng": 135.9226 },
     "description": "琵琶湖大橋西詰にある道の駅。滋賀の産品や琵琶湖の眺めを楽しめます。座標は施設付近の目安です。営業時間・駐車場入口は現地で確認してください。",
     "imageUrl": "", "source": "curated", "sourceUrl": "https://www.biwako-visitors.jp/spot/detail/9584/",
-    "supportedVehicles": ["car"], "isActive": true, "accessVerified": false,
+    "supportedVehicles": ["car", "motorcycle"], "isActive": true, "accessVerified": false,
     "openingInfo": { "type": "unknown", "note": "実地未確認。最新情報は公式案内を参照。" }, "demoDurations": {}
   },
   {
@@ -12,7 +12,7 @@
     "location": { "lat": 35.2745, "lng": 136.0106 },
     "description": "琵琶湖の湖中に立つ鳥居で知られる神社。座標は社殿付近の目安です。駐車場入口と立入条件は現地で確認してください。",
     "imageUrl": "", "source": "curated", "sourceUrl": "https://www.biwako-visitors.jp/spot/detail/390/",
-    "supportedVehicles": ["car"], "isActive": true, "accessVerified": false,
+    "supportedVehicles": ["car", "motorcycle"], "isActive": true, "accessVerified": false,
     "openingInfo": { "type": "unknown", "note": "実地未確認。国道を横断しないでください。" }, "demoDurations": {}
   },
   {
@@ -20,7 +20,7 @@
     "location": { "lat": 35.4625, "lng": 136.0375 },
     "description": "マキノ地域の並木道で四季の景観を楽しめます。座標は並木付近の目安です。駐車可能な場所と通行条件は現地で確認してください。",
     "imageUrl": "", "source": "curated", "sourceUrl": "https://ja.biwako-visitors.jp/spot/detail/308",
-    "supportedVehicles": ["car"], "isActive": true, "accessVerified": false,
+    "supportedVehicles": ["car", "motorcycle"], "isActive": true, "accessVerified": false,
     "openingInfo": { "type": "unknown", "note": "実地未確認。路上駐停車を避けてください。" }, "demoDurations": {}
   }
 ]
