@@ -32,6 +32,68 @@ export type Spot = {
   verified: boolean;
 };
 
+/** demo: 固定出発地点とデモ用推定時間を使う。live: 将来のGPS連携用（未実装）。 */
+export type AdventureMode = "demo" | "live";
+
+export type Origin = {
+  id: string;
+  label: string;
+  location: Coordinates;
+};
+
+export type OpeningInfo = {
+  /** unknown は営業時間・立ち入り条件を確認できない状態。実走行向け候補にしない。 */
+  type: "always_open" | "hours" | "unknown";
+  note?: string;
+};
+
+/** 目的地の登録データ。名称・座標は通常UIへ渡さない。 */
+export type DestinationCandidate = {
+  id: string;
+  name: string;
+  category: Exclude<Category, "random">;
+  location: Coordinates;
+  description: string;
+  imageUrl: string;
+  /** データ上の対応想定。実道路の通行安全性を保証しない。 */
+  supportedVehicles: VehicleType[];
+  isActive: boolean;
+  openingInfo: OpeningInfo;
+  accessVerified: boolean;
+  /** 出発地点ID別の片道推定所要時間（分）。デモ用の仮定値で、実走行の経路情報ではない。 */
+  demoDurations: Record<string, number>;
+};
+
+export type DestinationSelectionErrorCode =
+  | "INVALID_SETTINGS"
+  | "DATA_EMPTY"
+  | "DATA_INVALID"
+  | "NO_ACTIVE_SPOTS"
+  | "NO_CATEGORY_MATCH"
+  | "NO_VEHICLE_MATCH"
+  | "NO_DURATION_MATCH"
+  | "NO_VERIFIED_ACCESS";
+
+export type DestinationSelectionResult =
+  | {
+      ok: true;
+      destination: DestinationCandidate;
+      estimatedDurationMinutes: number;
+      candidateCount: number;
+    }
+  | { ok: false; errorCode: DestinationSelectionErrorCode };
+
+/** destinationId は内部状態。画面表示用データに目的地の名称・座標・画像を含めない。 */
+export type AdventurePlan = {
+  adventureId: string;
+  settings: AdventureSettings;
+  origin: Origin;
+  destinationId: string;
+  estimatedDurationMinutes: number;
+  status: AdventureStatus;
+  mode: AdventureMode;
+};
+
 export type Maneuver =
   | "STRAIGHT"
   | "TURN_LEFT"
