@@ -17,7 +17,12 @@ export const metadata: Metadata = {
   description:
     "時間は決める。行き先は決めない。到着するまで行き先が秘密の、小さな冒険。",
 };
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-visual",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
