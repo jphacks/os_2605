@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink } from "@/components/navigation/page-transition";
 import type { ReactNode } from "react";
 import { ScreenFrame } from "./screen-frame";
 import { ArrivedStationArt } from "./art/arrived-station";
@@ -54,7 +54,7 @@ export function ArrivedScreen({ genre, name }: { genre: ArrivedGenre; name: stri
         <span style={{color:"#F5A524",fontWeight:"900",fontSize:"15px",letterSpacing:".12em"}}>到着</span>
       </div>
       <div className="abs" style={{left:"24px",right:"24px",top:"672px",color:"#fff",fontWeight:"900",fontSize:nameFontSize(name),lineHeight:"1.15",whiteSpace:"nowrap"}}>{name}</div>
-      <Link href="/search" className="cta amber" style={{bottom:"36px",height:"62px",borderRadius:"31px"}}>
+      <TransitionLink href="/search" className="cta amber" style={{bottom:"36px",height:"62px",borderRadius:"31px"}}>
         もう一度
         <b style={{width:"42px",height:"42px"}}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color:"currentColor"}}>
@@ -65,7 +65,7 @@ export function ArrivedScreen({ genre, name }: { genre: ArrivedGenre; name: stri
             <circle cx="9" cy="15" r="1.3" fill="currentColor" stroke="none" />
           </svg>
         </b>
-      </Link>
+      </TransitionLink>
     </ScreenFrame>
   );
 }

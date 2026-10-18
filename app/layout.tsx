@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { PlanProvider } from "@/components/adventure/plan-context";
+import { PageTransitionProvider } from "@/components/navigation/page-transition";
 
 const notoSansJp = Noto_Sans_JP({
   weight: ["700", "900"],
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja" className={notoSansJp.variable}>
       <body>
-        <PlanProvider>{children}</PlanProvider>
+        <PageTransitionProvider>
+          <PlanProvider>{children}</PlanProvider>
+        </PageTransitionProvider>
       </body>
     </html>
   );

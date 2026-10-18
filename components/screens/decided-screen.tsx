@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink } from "@/components/navigation/page-transition";
 import { ScreenFrame } from "./screen-frame";
 import { DecidedContours } from "./contours/decided";
 
@@ -41,7 +41,7 @@ export function DecidedScreen({ minutes, onStart }: { minutes: number; onStart?:
           <small style={{fontSize:"14px",marginLeft:"-2px"}}>分</small>
         </div>
       </div>
-      <Link href="/adventure" className="cta amber" onClick={onStart}>
+      <TransitionLink href="/adventure" className="cta amber" onClick={onStart}>
         出発
         <b>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5A524" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{color:"#F5A524"}}>
@@ -49,7 +49,7 @@ export function DecidedScreen({ minutes, onStart }: { minutes: number; onStart?:
             <path d="M9 5 H19 V15" />
           </svg>
         </b>
-      </Link>
+      </TransitionLink>
     </ScreenFrame>
   );
 }
