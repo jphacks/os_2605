@@ -187,7 +187,7 @@ describe("selectDestination", () => {
 
   it("不正な設定値を拒否する", () => {
     const bad = [
-      settings({ durationMinutes: 50 as never }),
+      settings({ durationMinutes: 121 as never }),
       settings({ vehicleType: "bicycle" as never }),
       settings({ category: "sea" as never }),
       settings({ origin: { lat: 91, lng: 0 } }),

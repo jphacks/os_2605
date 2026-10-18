@@ -1,5 +1,6 @@
 /** ダイヤルの15分刻み。30〜120分。 */
-export type DurationMinutes = 30 | 45 | 60 | 75 | 90 | 105 | 120;
+/** 検索時間（分）。入力境界で10〜120の整数に検証する。 */
+export type DurationMinutes = number;
 
 export type VehicleType = "motorcycle" | "car";
 

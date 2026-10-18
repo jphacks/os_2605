@@ -46,31 +46,31 @@ describe("dial geometry", () => {
 });
 
 describe("dialMinutes", () => {
-  it("30〜120分の15分刻みに丸める", () => {
+  it("0〜120分の1分刻みに丸める", () => {
     expect(dialMinutes(90, null)).toBe(30);
     expect(dialMinutes(180, null)).toBe(60);
     expect(dialMinutes(270, null)).toBe(90);
-    expect(dialMinutes(200, null)).toBe(60);
+    expect(dialMinutes(200, null)).toBe(67);
     expect(dialMinutes(225, null)).toBe(75);
-    expect(dialMinutes(350, null)).toBe(120);
+    expect(dialMinutes(350, null)).toBe(117);
   });
 
-  it("範囲外の上端付近は30分側に寄せ、ドラッグ中は近い端に留まる", () => {
-    expect(dialMinutes(10, null)).toBe(30);
-    expect(dialMinutes(10, 30)).toBe(30);
+  it("上端付近も1分刻みで選択し、120分から上端をまたぐと端に留まる", () => {
+    expect(dialMinutes(10, null)).toBe(3);
+    expect(dialMinutes(10, 30)).toBe(3);
     expect(dialMinutes(10, 120)).toBe(120);
     expect(dialMinutes(60, 105)).toBe(120);
   });
 
   it("上端をまたいで反対側へ飛ばない", () => {
-    expect(dialMinutes(340, 30)).toBe(30);
+    expect(dialMinutes(340, 30)).toBe(0);
     expect(dialMinutes(60, 120)).toBe(120);
-    expect(dialMinutes(300, 90)).toBe(105);
+    expect(dialMinutes(300, 90)).toBe(100);
   });
 
   it("clampMinutes は範囲と刻みに収める", () => {
-    expect(clampMinutes(10)).toBe(30);
+    expect(clampMinutes(10)).toBe(10);
     expect(clampMinutes(200)).toBe(120);
-    expect(clampMinutes(52)).toBe(45);
+    expect(clampMinutes(52)).toBe(52);
   });
 });

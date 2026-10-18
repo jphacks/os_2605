@@ -19,7 +19,7 @@ const AdventureContext = createContext<AdventureState | null>(null);
 
 /** In-memory only, including live data. Reload ends the prepared adventure safely. */
 export function PlanProvider({ children }: { children: ReactNode }) {
-  const [minutes, setMinutes] = useState(90);
+  const [minutes, setMinutes] = useState(0);
   const [plan, setPlan] = useState<PublicAdventurePlan | null>(null);
   const [revealed, setRevealed] = useState<RevealedDestination | null>(null);
   return (

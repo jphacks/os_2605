@@ -9,6 +9,15 @@ export const vehicleOptions = [
 /** 時間ダイヤル（1周=120分）の範囲と刻み。 */
 export const DURATION_MIN = 0;
 export const DURATION_MAX = 120;
+/** ダイヤルの0分表示と、検索で使用する最低時間を分離する。 */
+export const SEARCH_DURATION_MIN = 10;
+export function normalizeSearchMinutes(value: unknown): number | null {
+  if (typeof value !== "number" || !Number.isInteger(value) || value < 0 || value > DURATION_MAX) return null;
+  return Math.max(SEARCH_DURATION_MIN, value);
+}
+export function canStartAdventure(value: number): boolean {
+  return value > 0 && normalizeSearchMinutes(value) !== null;
+}
 export const DURATION_STEP = 1;
 
 export const durationOptions = Array.from(

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRef, type KeyboardEvent, type PointerEvent } from "react";
 import { DIAL, angleFromOffset, angleOfMinutes, clampMinutes, dialMinutes, pointOnDial } from "@/features/adventure/dial";
-import { DURATION_MAX, DURATION_MIN, DURATION_STEP } from "@/features/adventure/setup-options";
+import { canStartAdventure, SEARCH_DURATION_MIN, DURATION_MAX, DURATION_MIN, DURATION_STEP } from "@/features/adventure/setup-options";
 import { ScreenFrame } from "./screen-frame";
 import { TimeContours } from "./contours/time";
 
@@ -103,7 +103,10 @@ export function TimeScreen({ minutes, onChange, startHref }: { minutes: number; 
           </svg>
         </span>
       </Link>
-      <Link href={startHref} className="cta dark">
+      <p id="time-start-note" className="abs" style={{ left: "24px", right: "24px", top: "636px", textAlign: "center", color: "#16413F", fontSize: "14px" }}>
+        {minutes === 0 ? "時間を選んでください" : minutes < SEARCH_DURATION_MIN ? "10分として目的地を検索します" : "片道の目安時間です"}
+      </p>
+      {canStartAdventure(minutes) ? <Link href={startHref} className="cta dark" aria-describedby="time-start-note">
         出発
         <b>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: "currentColor" }}>
@@ -111,7 +114,7 @@ export function TimeScreen({ minutes, onChange, startHref }: { minutes: number; 
             <path d="M9 5 H19 V15" />
           </svg>
         </b>
-      </Link>
+      </Link> : <button type="button" disabled className="cta dark" aria-describedby="time-start-note" style={{ opacity: 0.45, cursor: "not-allowed" }}>出発</button>}
     </ScreenFrame>
   );
 }

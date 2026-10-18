@@ -125,7 +125,7 @@ describe("planAdventure", () => {
 
   it("不正な設定は拒否する", async () => {
     await expect(
-      planAdventure({ ...settings, durationMinutes: 50 as never }, "demo", {
+      planAdventure({ ...settings, durationMinutes: 121 as never }, "demo", {
         findCandidates: byGenre(everyGenre),
         provider,
       }),

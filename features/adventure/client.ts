@@ -1,3 +1,4 @@
+import { normalizeSearchMinutes } from "./setup-options";
 import { DEMO_ORIGIN } from "@/config/demo";
 import { FIXED_VEHICLE } from "@/config/vehicle";
 import { getCurrentLocation } from "@/lib/navigation/current-location";
@@ -31,6 +32,8 @@ export async function searchAdventure(
   request: typeof fetch = fetch,
   locate: () => Promise<{ lat: number; lng: number }> = getCurrentLocation,
 ): Promise<SearchResult> {
+  const durationMinutes = normalizeSearchMinutes(minutes);
+  if (durationMinutes === null) return { ok: false, message: "時間は0〜120分の整数で指定してください。" };
   let origin = DEMO_ORIGIN;
   if (!origin) {
     try {
@@ -52,7 +55,7 @@ export async function searchAdventure(
         mode: "live",
         settings: {
           vehicleType: FIXED_VEHICLE,
-          durationMinutes: minutes,
+          durationMinutes,
           category: "random",
           origin,
         },
