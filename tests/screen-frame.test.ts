@@ -12,6 +12,12 @@ describe("screen frame sizing", () => {
     expect(844 * result.scaleY).toBeCloseTo(800);
   });
 
+  it("uses the visual viewport dimensions when offsets are included", () => {
+    const result = fitScreen("393x759x0x47");
+    expect(390 * result.scaleX).toBeCloseTo(393);
+    expect(844 * result.scaleY).toBeCloseTo(759);
+  });
+
   it("keeps a uniform capped scale on larger screens", () => {
     const result = fitScreen("1440x1200");
     expect(result.scaleX).toBe(1.35);

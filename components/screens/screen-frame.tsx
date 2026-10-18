@@ -10,10 +10,23 @@ const MOBILE_MAX_WIDTH = 600;
 
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange);
-  return () => window.removeEventListener("resize", onChange);
+  window.visualViewport?.addEventListener("resize", onChange);
+  window.visualViewport?.addEventListener("scroll", onChange);
+  return () => {
+    window.removeEventListener("resize", onChange);
+    window.visualViewport?.removeEventListener("resize", onChange);
+    window.visualViewport?.removeEventListener("scroll", onChange);
+  };
 }
-const viewportSize = () => `${window.innerWidth}x${window.innerHeight}`;
-const serverSize = () => `${SCREEN_WIDTH}x${SCREEN_HEIGHT}`;
+
+/** スマホのブラウザUIを除いた、実際に表示されている領域を返す。 */
+const viewportState = () => {
+  const viewport = window.visualViewport;
+  return viewport
+    ? `${viewport.width}x${viewport.height}x${viewport.offsetLeft}x${viewport.offsetTop}`
+    : `${window.innerWidth}x${window.innerHeight}x0x0`;
+};
+const serverState = () => `${SCREEN_WIDTH}x${SCREEN_HEIGHT}x0x0`;
 
 export function fitScale(size: string) {
   const [width, height] = size.split("x").map(Number);
@@ -45,14 +58,19 @@ export function ScreenFrame({
   live?: boolean;
   children: ReactNode;
 }) {
-  const { scaleX, scaleY } = fitScreen(useSyncExternalStore(subscribe, viewportSize, serverSize));
+  const state = useSyncExternalStore(subscribe, viewportState, serverState);
+  const [viewportWidth, viewportHeight, offsetLeft, offsetTop] = state.split("x").map(Number);
+  const { scaleX, scaleY } = fitScreen(state);
   return (
     <main
       aria-label={label}
       aria-live={live ? "polite" : undefined}
       style={{
         position: "fixed",
-        inset: 0,
+        left: offsetLeft,
+        top: offsetTop,
+        width: viewportWidth,
+        height: viewportHeight,
         overflow: "hidden",
         background,
         display: "flex",

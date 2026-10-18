@@ -3,8 +3,15 @@
 :root {
   color-scheme: light;
 }
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
 body {
   margin: 0;
+  min-height: 100dvh;
   background: #f5f5ed;
   color: #183c32;
   font-family:
