@@ -4,11 +4,23 @@ import { RoutingError } from "@/lib/routing/errors";
 import { record } from "@/lib/routing/validation";
 import roadsideStations from "@/data/roadside-stations.json";
 const filters: Record<Exclude<Category, "random">, string[]> = {
- nature: ['[leisure=park][tourism]', '[leisure=nature_reserve]', '[natural=waterfall]', '[tourism=viewpoint]', '[natural=peak]'],
+ // 自然: 公園は小さな近所の公園を避けるため、観光タグかWikidata登録のあるものに絞る。
+ nature: ['[leisure=park][tourism]', '[leisure=park][wikidata]', '[leisure=nature_reserve]', '[natural=waterfall]', '[tourism=viewpoint]', '[natural=peak]'],
  cafe: ['[amenity=cafe]'],
- history: ['[historic~"^(castle|ruins|monument|archaeological_site)$"]', '[amenity=place_of_worship][tourism]'],
- hot_spring: ['[amenity=public_bath]["bath:type"=hot_spring]', '[leisure=hot_spring]'],
- roadside_station: ['[highway=rest_area][name~"道の駅"]'],
+ // 歴史: 個別の小さな碑や像を避けるため、城・観光タグ・Wikidata登録のあるものに絞る。
+ history: ['[historic=castle]', '[historic~"^(ruins|monument|archaeological_site)$"][tourism]', '[historic~"^(ruins|monument|archaeological_site)$"][wikidata]',
+  '[amenity=place_of_worship][tourism]', '[amenity=place_of_worship][wikidata]'],
+ hot_spring: ['[amenity=public_bath]["bath:type"=hot_spring]', '[amenity=public_bath][name~"温泉"]', '[leisure=hot_spring]'],
+ // 道の駅はOSMでは highway=services で登録され、名前が「道の駅」で始まる。
+ roadside_station: ['[highway=services][name~"道の駅"]', '[highway=rest_area][name~"道の駅"]'],
+};
+/** Nominatimの自由語検索は無関係な場所（建物・時計・小道など）も返すため、種別でジャンルに合うものだけを残す。 */
+const nominatimTypes: Record<Exclude<Category, "random">, (category: string, type: string) => boolean> = {
+ nature: (c, t) => (c === "leisure" && ["park", "nature_reserve", "garden"].includes(t)) || c === "natural" || (c === "tourism" && ["viewpoint", "attraction"].includes(t)) || c === "boundary",
+ cafe: (c, t) => c === "amenity" && t === "cafe",
+ history: (c, t) => c === "historic" || (c === "amenity" && t === "place_of_worship") || (c === "tourism" && ["attraction", "museum"].includes(t)),
+ hot_spring: (c, t) => (c === "amenity" && t === "public_bath") || (c === "leisure" && t === "hot_spring") || (c === "natural" && t === "hot_spring"),
+ roadside_station: (c, t) => c === "highway" && ["services", "rest_area"].includes(t),
 };
 const searchTerms: Record<Exclude<Category, "random">, string> = {
  nature: "公園", cafe: "カフェ", history: "史跡", hot_spring: "温泉", roadside_station: "道の駅",
@@ -65,6 +77,8 @@ async function searchNominatim(settings: AdventureSettings, request: typeof fetc
   const place = item as Record<string, unknown>;
   const lat = Number(place.lat), lng = Number(place.lon), osmId = Number(place.osm_id);
   const osmType = String(place.osm_type ?? "").toLowerCase();
+  // 種別が分かる結果は、ジャンルに合うものだけを使う（種別がない結果は判断できないので残す）。
+  if (typeof place.category === "string" && typeof place.type === "string" && !nominatimTypes[category](place.category, place.type)) continue;
   const name = typeof place.name === "string" && place.name.trim() ? place.name.trim() :
    typeof place.display_name === "string" ? place.display_name.split(",")[0].trim() : "";
   if (!name || !Number.isSafeInteger(osmId) || !["node", "way", "relation"].includes(osmType) || !isCoordinates({ lat, lng })) continue;
@@ -91,16 +105,33 @@ export async function searchDestinations(settings: AdventureSettings, request: t
  const found = await searchOsm(settings, request).catch(error => { if (manual.length) return []; throw error; });
  return [...manual, ...found.filter(c => !manual.some(m => m.id === c.id))];
 }
+/**
+ * 道の駅は名前検索（Nominatim）が正確なので先に使う。それ以外は、タグで絞れて種別が正確なOverpassを先に使い、
+ * 失敗または0件のときだけNominatimの自由語検索へ進む（自由語検索は名前に語を含む無関係な場所も返すため）。
+ */
 async function searchOsm(settings: AdventureSettings, request: typeof fetch): Promise<DestinationCandidate[]> {
- const nominatimResults = await searchNominatim(settings, request);
- if (nominatimResults.length) return nominatimResults;
+ const sources = nominatimCategory(settings) === "roadside_station"
+  ? [searchNominatim, searchOverpass] : [searchOverpass, searchNominatim];
+ let failure: unknown;
+ for (const source of sources) {
+  try {
+   const results = await source(settings, request);
+   if (results.length) return results;
+  } catch (error) {
+   // 0件(NO_PLACES)より、上限・混雑・タイムアウトなど原因の分かる失敗を優先して返す。
+   if (!failure || (failure instanceof RoutingError && failure.code === "NO_PLACES")) failure = error;
+  }
+ }
+ throw failure ?? new RoutingError("NO_PLACES", 404);
+}
+async function searchOverpass(settings: AdventureSettings, request: typeof fetch): Promise<DestinationCandidate[]> {
  const categories = settings.category === "random" ? Object.keys(filters) as Exclude<Category, "random">[] : [settings.category];
  // A bounded box is substantially cheaper for public Overpass instances than a
  // large multi-filter radius search. Actual travel time is still verified by OSRM.
  const bounds = searchBox(settings);
  const box = [bounds.south, bounds.west, bounds.north, bounds.east]
   .map(value => value.toFixed(5)).join(",");
- const query = `[out:json][timeout:12];(${categories.flatMap(c => filters[c].map(f => `nwr${f}[name](${box});`)).join("")});out center tags 60;`;
+ const query = `[out:json][timeout:12];(${categories.flatMap(c => filters[c].map(f => `nwr${f}[name](${box});`)).join("")});out center tags 150;`;
  const endpoints = process.env.OSM_OVERPASS_URL ? [process.env.OSM_OVERPASS_URL] : [
   "https://overpass.private.coffee/api/interpreter", "https://overpass-api.de/api/interpreter",
  ];
@@ -145,7 +176,7 @@ async function searchOsm(settings: AdventureSettings, request: typeof fetch): Pr
   if (ids.has(id)) continue;
   ids.add(id);
   const category = tags.amenity === "cafe" ? "cafe" : tags.tourism === "viewpoint" || tags.natural === "peak" || ["park", "nature_reserve"].includes(String(tags.leisure)) || tags.natural === "waterfall" ? "nature" :
-   tags.highway === "rest_area" ? "roadside_station" : tags.leisure === "hot_spring" || tags["bath:type"] === "hot_spring" ? "hot_spring" : "history";
+   ["rest_area", "services"].includes(String(tags.highway)) ? "roadside_station" : tags.leisure === "hot_spring" || tags.amenity === "public_bath" || tags["bath:type"] === "hot_spring" ? "hot_spring" : "history";
   if (settings.category !== "random" && settings.category !== category) continue;
   const openingHours = typeof tags.opening_hours === "string" ? tags.opening_hours.trim() : "";
   const openingInfo = openingHours === "24/7" ? { type: "always_open" as const, note: openingHours } :
