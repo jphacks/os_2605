@@ -38,9 +38,9 @@ export function adaptOsrmRoute(payload: unknown, input: RouteRequest): Route {
       const step = record(item), maneuver = record(step.maneuver);
       const geometry = record(step.geometry).coordinates;
       if (!Array.isArray(geometry) || !geometry.length || typeof maneuver.type !== "string") throw new RoutingError("MISSING_INSTRUCTIONS");
-      const modifiers: Record<string, Maneuver> = { left: "TURN_LEFT", right: "TURN_RIGHT", "slight left": "SLIGHT_LEFT", "slight right": "SLIGHT_RIGHT", straight: "STRAIGHT", uturn: "UTURN" };
+      const modifiers: Record<string, Maneuver> = { left: "TURN_LEFT", right: "TURN_RIGHT", "slight left": "SLIGHT_LEFT", "slight right": "SLIGHT_RIGHT", straight: "STRAIGHT", uturn: "UTURN", "sharp left": "TURN_LEFT", "sharp right": "TURN_RIGHT" };
       const kind: Maneuver = maneuver.type === "arrive" ? "ARRIVE" : maneuver.type === "depart" ? "STRAIGHT" :
-        ["turn", "continue", "new name", "end of road"].includes(maneuver.type) ? modifiers[String(maneuver.modifier)] ?? "OTHER" : "OTHER";
+        ["turn", "continue", "new name", "end of road", "fork", "on ramp", "off ramp", "merge", "ramp"].includes(maneuver.type) ? modifiers[String(maneuver.modifier)] ?? "OTHER" : "OTHER";
       const labels: Record<Maneuver, string> = { STRAIGHT: "直進", TURN_LEFT: "左折", TURN_RIGHT: "右折", SLIGHT_LEFT: "緩やかに左へ", SLIGHT_RIGHT: "緩やかに右へ", UTURN: "Uターン", ARRIVE: "到着", OTHER: "道路の案内を確認" };
       steps.push({ id: `step-${steps.length}`, maneuver: kind, instruction: labels[kind], location: point(geometry[0]),
         endLocation: point(geometry[geometry.length - 1]), distanceMeters: nonnegative(step.distance),
