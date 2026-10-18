@@ -305,9 +305,15 @@
   animation: portal-copy-in 800ms 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .s .top-cta {
+  scale: 1;
+  transition: scale 160ms ease-out;
   animation:
     portal-copy-in 850ms 2.85s cubic-bezier(0.16, 1, 0.3, 1) forwards,
     portal-cta-pulse 3s 4s ease-in-out infinite;
+}
+.s .top-cta:active {
+  scale: .96;
+  transition-duration: 80ms;
 }
 .s .top-credit {
   animation: portal-copy-in 700ms 3.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -465,6 +471,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .s .top-cta {
+    transition: none;
+  }
   .s .radar {
     animation: none;
   }
