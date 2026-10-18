@@ -158,7 +158,7 @@ describe("title slide DOM effects", () => {
     expect(harness.push).toHaveBeenLastCalledWith("/search");
     vi.advanceTimersByTime(1_540);
     render("/decided").navigate("/adventure");
-    vi.advanceTimersByTime(1_150);
+    vi.advanceTimersByTime(2_900);
     expect(harness.push).toHaveBeenLastCalledWith("/adventure");
   });
 

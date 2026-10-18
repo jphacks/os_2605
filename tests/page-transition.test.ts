@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isTransitionableHref, titleSlideDirection } from "@/components/navigation/page-transition";
+import { isTransitionableHref, titleSlideDirection, transitionKind } from "@/components/navigation/page-transition";
 
 describe("page transition navigation", () => {
   const current = "https://example.com/setup?minutes=30";
@@ -10,6 +10,12 @@ describe("page transition navigation", () => {
     for (const [from, to] of [["/setup", "/search"], ["/search", "/decided"], ["/decided", "/setup"], ["/arrived", "/"], ["/", "/"]]) {
       expect(titleSlideDirection(from, to)).toBe(0);
     }
+  });
+
+  it("uses the dedicated departure transition only from decided to adventure", () => {
+    expect(transitionKind("/decided", "/adventure")).toBe("departure");
+    expect(transitionKind("/setup", "/search")).toBe("common");
+    expect(transitionKind("/adventure", "/decided")).toBe("common");
   });
 
   it("accepts another internal page", () => {
