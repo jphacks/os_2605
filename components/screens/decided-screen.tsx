@@ -3,7 +3,7 @@ import { ScreenFrame } from "./screen-frame";
 import { DecidedContours } from "./contours/decided";
 
 /** design-ref/screens/04_decided.html（目的地・ジャンルは表示しない。所要時間のチップのみ） */
-export function DecidedScreen({ minutes }: { minutes: number }) {
+export function DecidedScreen({ minutes, onStart }: { minutes: number; onStart?: () => void }) {
   return (
     <ScreenFrame background="var(--ink)" label="目的地が決まりました">
       <svg className="abs" width="390" height="844" style={{left:"0",top:"0"}}>
@@ -41,7 +41,7 @@ export function DecidedScreen({ minutes }: { minutes: number }) {
           <small style={{fontSize:"14px",marginLeft:"-2px"}}>分</small>
         </div>
       </div>
-      <Link href="/adventure" className="cta amber">
+      <Link href="/adventure" className="cta amber" onClick={onStart}>
         出発
         <b>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5A524" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{color:"#F5A524"}}>

@@ -65,8 +65,8 @@ describe("spoken text", () => {
     expect(createAnnouncements("r", guidance(60)).at(-1)?.text).toBe("まもなく、右折です");
   });
 
-  it("到着・不明な案内、案内停止中は読み上げない", () => {
-    expect(createAnnouncements("r", guidance(50, "OTHER"))).toEqual([]);
+  it("到着の案内と案内停止中は読み上げない。分岐などの案内は汎用の文言で読む", () => {
+    expect(createAnnouncements("r", guidance(500, "OTHER")).at(-1)?.text).toBe("500メートル先、進路に注意してください");
     expect(createAnnouncements("r", guidance(50, "ARRIVE"))).toEqual([]);
     expect(createAnnouncements("r", { ...guidance(50), status: "off-route" })).toEqual([]);
   });

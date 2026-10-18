@@ -17,7 +17,7 @@ import {
   type NavigationGuidance,
 } from "@/lib/navigation/engine";
 import { GPSLocationProvider } from "@/lib/navigation/location-provider";
-import { SpeechService } from "@/lib/speech";
+import { getSpeechService } from "@/lib/speech-instance";
 import type { LocationSample, PublicAdventurePlan } from "@/types/adventure";
 
 function unusableLocationMessage(sample: LocationSample, now: number) {
@@ -40,12 +40,8 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
   const [mapOpen, setMapOpen] = useState(false);
   const [guidance, setGuidance] = useState<NavigationGuidance | null>(null);
   const [notice, setNotice] = useState<string | null>("現在地を取得しています…");
-  // 音声案内は初期ON（非対応のブラウザでは自動的にOFF）。
-  const [speech] = useState(() => {
-    const service = new SpeechService();
-    service.setEnabled(true);
-    return service;
-  });
+  // 音声案内は初期ON（非対応のブラウザでは自動的にOFF）。04の「出発」のタップで最初の発話をした同じものを使う。
+  const [speech] = useState(() => getSpeechService());
   const [voiceOn, setVoiceOn] = useState(() => speech.isEnabled());
 
   useEffect(() => {
@@ -115,12 +111,14 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
   function toggleVoice() {
     const enabled = speech.setEnabled(!voiceOn);
     setVoiceOn(enabled);
+    // ONにした操作の中で、今の案内をもう一度読む。
+    if (enabled && guidance) speech.replay(plan.route.id, guidance);
     if (!enabled && !speech.isSupported()) {
       setNotice("このブラウザでは音声案内を利用できません。画面の案内を確認してください。");
     }
   }
   function stop() {
-    speech.dispose();
+    speech.reset();
     setPlan(null);
     setRevealed(null);
     router.replace("/");

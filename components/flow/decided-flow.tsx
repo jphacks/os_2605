@@ -2,6 +2,7 @@
 import { useAdventure } from "@/components/adventure/plan-context";
 import { DecidedScreen } from "@/components/screens/decided-screen";
 import { MessageScreen } from "@/components/screens/message-screen";
+import { getSpeechService } from "@/lib/speech-instance";
 
 export function DecidedFlow() {
   const { plan } = useAdventure();
@@ -15,5 +16,6 @@ export function DecidedFlow() {
       </MessageScreen>
     );
   }
-  return <DecidedScreen minutes={Math.round(plan.estimatedDurationMinutes)} />;
+  // 「出発」のタップの中で最初の発話をする（自動再生の制限を解くため）。
+  return <DecidedScreen minutes={Math.round(plan.estimatedDurationMinutes)} onStart={() => getSpeechService().prime()} />;
 }
