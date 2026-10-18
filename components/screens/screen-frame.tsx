@@ -6,7 +6,6 @@ import "./screens.css";
 export const SCREEN_WIDTH = 390;
 export const SCREEN_HEIGHT = 844;
 const MAX_SCALE = 1.35;
-const MOBILE_MAX_WIDTH = 600;
 
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange);
@@ -33,15 +32,8 @@ export function fitScale(size: string) {
   return Math.min(width / SCREEN_WIDTH, height / SCREEN_HEIGHT, MAX_SCALE);
 }
 
-/**
- * スマホの縦画面では端末ごとの縦横比に合わせて画面全体を使う。
- * PC・タブレットではモックの比率を維持し、過度に拡大しない。
- */
+/** 背景は表示領域全体に広げ、デザインは縦横比を維持して収める。 */
 export function fitScreen(size: string) {
-  const [width, height] = size.split("x").map(Number);
-  if (width <= MOBILE_MAX_WIDTH && height >= width) {
-    return { scaleX: width / SCREEN_WIDTH, scaleY: height / SCREEN_HEIGHT };
-  }
   const scale = fitScale(size);
   return { scaleX: scale, scaleY: scale };
 }
@@ -63,6 +55,7 @@ export function ScreenFrame({
   const { scaleX, scaleY } = fitScreen(state);
   return (
     <main
+      className="screen-frame"
       aria-label={label}
       aria-live={live ? "polite" : undefined}
       style={{
