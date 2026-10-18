@@ -7,9 +7,9 @@ export const vehicleOptions = [
 ] satisfies { value: VehicleType; label: string }[];
 
 /** 時間ダイヤル（1周=120分）の範囲と刻み。 */
-export const DURATION_MIN = 30;
+export const DURATION_MIN = 0;
 export const DURATION_MAX = 120;
-export const DURATION_STEP = 15;
+export const DURATION_STEP = 1;
 
 export const durationOptions = Array.from(
   { length: (DURATION_MAX - DURATION_MIN) / DURATION_STEP + 1 },
