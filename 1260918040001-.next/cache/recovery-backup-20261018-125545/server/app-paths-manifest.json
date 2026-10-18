@@ -1,0 +1,14 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/api/adventures/arrival/route": "app/api/adventures/arrival/route.js",
+  "/api/adventures/reveal/route": "app/api/adventures/reveal/route.js",
+  "/api/adventures/route": "app/api/adventures/route.js",
+  "/api/routes/route": "app/api/routes/route.js",
+  "/page": "app/page.js",
+  "/adventure/page": "app/adventure/page.js",
+  "/arrived/page": "app/arrived/page.js",
+  "/decided/page": "app/decided/page.js",
+  "/search/page": "app/search/page.js",
+  "/setup/page": "app/setup/page.js"
+}

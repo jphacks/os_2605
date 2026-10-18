@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/adventures": {},
+    "/api/adventures/arrival": {},
+    "/api/adventures/reveal": {},
+    "/api/routes": {}
+  }
+}

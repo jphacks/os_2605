@@ -1,0 +1,22 @@
+{
+  "components\\adventure\\route-map-dialog.tsx -> ./route-map": {
+    "id": 3728,
+    "files": [
+      "static/css/c3fb5753097ad878.css",
+      "static/chunks/ca4dcb09.8527a399b5222244.js",
+      "static/chunks/728.3d1bf3ba4c4e09be.js"
+    ]
+  },
+  "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": 1966,
+    "files": [
+      "static/chunks/966.1775eb621d8d3e09.js"
+    ]
+  },
+  "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": 3899,
+    "files": [
+      "static/chunks/899.5ce6b3cbad015b59.js"
+    ]
+  }
+}

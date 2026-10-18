@@ -1,3 +1,22 @@
+.returnedTitle.returnedTitle :global(.top-opening-veil) {
+  display: none;
+}
+
+.returnedTitle.returnedTitle :global(.top-visual),
+.returnedTitle.returnedTitle :global(.top-portal-reveal),
+.returnedTitle.returnedTitle :global(.top-kicker),
+.returnedTitle.returnedTitle :global(.top-title),
+.returnedTitle.returnedTitle :global(.top-subtitle),
+.returnedTitle.returnedTitle :global(.top-cta),
+.returnedTitle.returnedTitle :global(.top-credit) {
+  animation: none;
+  opacity: 1;
+}
+
+.returnedTitle.returnedTitle :global(.top-portal-breathe) {
+  animation-delay: 0s;
+}
+
 .overlay {
   --transition-x: 50vw;
   --transition-y: 50vh;

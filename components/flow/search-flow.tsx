@@ -12,11 +12,13 @@ export function SearchFlow() {
   const router = useRouter();
   const [attempt, setAttempt] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [finishing, setFinishing] = useState(false);
   // 開発時の二重実行でも、同じ試行では検索を1回しか行わない。
   const inFlight = useRef<{ attempt: number; promise: Promise<SearchResult> } | null>(null);
 
   useEffect(() => {
     let alive = true;
+    let completionTimer: ReturnType<typeof setTimeout> | undefined;
     if (inFlight.current?.attempt !== attempt) {
       inFlight.current = { attempt, promise: searchAdventure(minutes) };
     }
@@ -25,13 +27,16 @@ export function SearchFlow() {
       if (result.ok) {
         setRevealed(null);
         setPlan(result.plan);
-        router.replace("/decided");
+        setFinishing(true);
+        const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 600;
+        completionTimer = setTimeout(() => router.replace("/decided"), delay);
       } else {
         setError(result.message);
       }
     });
     return () => {
       alive = false;
+      clearTimeout(completionTimer);
     };
   }, [attempt, minutes, router, setPlan, setRevealed]);
 
@@ -52,5 +57,5 @@ export function SearchFlow() {
       </MessageScreen>
     );
   }
-  return <SearchingScreen />;
+  return <SearchingScreen finishing={finishing} />;
 }

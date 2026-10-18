@@ -1,0 +1,1 @@
+globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/api/adventures/reveal/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"C:\\Users\\nari0\\OneDrive\\デスクトップ\\os_2605_new\\app\\api\\adventures\\reveal\\route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}};
