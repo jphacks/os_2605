@@ -1,4 +1,5 @@
 "use client";
+import { maneuverLabel } from "@/features/adventure/ride-view";
 import type { ReactNode } from "react";
 import type { Maneuver } from "@/types/adventure";
 import { ScreenFrame } from "./screen-frame";
@@ -89,9 +90,10 @@ export function RidingScreen({ view, voiceOn, onVoice, onStop, onMap }: { view: 
           {view.notice}
         </p>
       )}
-      <div className="abs" style={{ left: "0", right: "0", top: "536px", textAlign: "center", color: "#fff", fontWeight: "900", fontSize: "96px", lineHeight: "1", letterSpacing: "-.02em" }}>
+      <div className="abs" style={{ left: "0", right: "0", top: "536px", textAlign: "center", color: "#fff", fontWeight: "900", fontSize: "44px", lineHeight: "1.4", letterSpacing: "-.02em" }}>
         {view.distance.value}
-        <span style={{ fontSize: "36px", marginLeft: "6px", color: "#F5A524" }}>{view.distance.unit}</span>
+        <span style={{ fontSize: "28px", marginLeft: "6px", color: "#F5A524" }}>{view.distance.unit}</span>
+        <span style={{ fontSize: "24px", marginLeft: "4px", color: "#fff" }}>{maneuverLabel(view.maneuver)}</span>
       </div>
       <div className="abs" style={{ left: "24px", right: "24px", bottom: "50px", display: "flex", justifyContent: "space-between", padding: "0 18px" }}>
         <Control label="音声" onClick={onVoice} pressed={voiceOn}>
