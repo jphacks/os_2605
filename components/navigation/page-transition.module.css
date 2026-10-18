@@ -120,6 +120,153 @@
   opacity: 0;
 }
 
+.departure {
+  background: #163b3b;
+}
+
+.departureScene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 27%, rgba(115, 176, 160, 0.34) 0, rgba(36, 89, 82, 0.24) 19%, transparent 46%),
+    linear-gradient(180deg, #315d59 0%, #1d4847 44%, #112f32 100%);
+}
+
+.covering.departure .departureScene {
+  animation: departure-scene-in 420ms ease-out both;
+}
+
+.revealing.departure {
+  animation: departure-scene-out 1200ms cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.departureHorizon {
+  position: absolute;
+  left: 50%;
+  top: 27%;
+  width: min(92vw, 760px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(202, 231, 219, 0.11);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  box-shadow:
+    0 0 0 8vw rgba(202, 231, 219, 0.035),
+    0 0 0 18vw rgba(202, 231, 219, 0.025),
+    0 0 0 30vw rgba(202, 231, 219, 0.018);
+}
+
+.covering.departure .departureHorizon {
+  animation: departure-horizon 1050ms 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.destinationSignal {
+  position: absolute;
+  left: 50%;
+  top: 27%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.15);
+}
+
+.destinationSignal::before,
+.destinationSignal::after {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  border: 1.5px solid rgba(255, 205, 104, 0.86);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.destinationCore {
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: #ffd071;
+  box-shadow:
+    0 0 12px #ffbf48,
+    0 0 34px rgba(255, 191, 72, 0.96),
+    0 0 74px rgba(255, 191, 72, 0.58);
+}
+
+.covering.departure .destinationSignal {
+  animation: destination-ping 720ms 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.covering.departure .destinationSignal::before {
+  animation: destination-wave 950ms 520ms ease-out forwards;
+}
+
+.covering.departure .destinationSignal::after {
+  animation: destination-wave 1100ms 690ms ease-out forwards;
+}
+
+.departureTrail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.lightTrailGlow,
+.lightTrailCore,
+.lightTrailHighlight {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.lightTrailGlow {
+  stroke: rgba(255, 178, 50, 0.34);
+  stroke-width: 22;
+  filter: blur(7px);
+}
+
+.lightTrailCore {
+  stroke: #ffb637;
+  stroke-width: 6;
+  filter: drop-shadow(0 0 8px rgba(255, 184, 55, 0.92));
+}
+
+.lightTrailHighlight {
+  stroke: rgba(255, 238, 191, 0.96);
+  stroke-width: 1.5;
+}
+
+.lightTrailReveal {
+  transform-box: fill-box;
+  transform-origin: center top;
+  transform: scaleY(0);
+}
+
+.covering.departure .lightTrailReveal {
+  animation: light-trail-reveal 1720ms 1180ms cubic-bezier(0.3, 0, 0.12, 1) both;
+}
+
+.departureLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(27% + 34px);
+  color: rgba(255, 215, 137, 0.92);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.32em;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.covering.departure .departureLabel {
+  animation: departure-label-in 600ms 620ms ease-out forwards;
+}
+
 .covering .label {
   animation: transition-label-in 620ms 380ms ease-out forwards;
 }
@@ -224,6 +371,45 @@
   to {
     opacity: 0;
   }
+}
+
+@keyframes departure-scene-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes departure-scene-out {
+  0% { opacity: 1; transform: scale(1); }
+  38% { opacity: 1; transform: scale(1.025); }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+
+@keyframes departure-horizon {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  55% { opacity: 0.72; }
+  100% { opacity: 0.28; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes destination-ping {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.15); }
+  46% { opacity: 1; transform: translate(-50%, -50%) scale(1.75); }
+  72% { transform: translate(-50%, -50%) scale(0.82); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes destination-wave {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(8); }
+}
+
+@keyframes light-trail-reveal {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes departure-label-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

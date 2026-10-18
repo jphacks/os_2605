@@ -8,8 +8,12 @@ import styles from "./page-transition.module.css";
 const COVER_DURATION_MS = 1_150;
 const REVEAL_DELAY_MS = 240;
 const REVEAL_DURATION_MS = 1_300;
+const DEPARTURE_COVER_DURATION_MS = 2_900;
+const DEPARTURE_REVEAL_DELAY_MS = 120;
+const DEPARTURE_REVEAL_DURATION_MS = 1_200;
 
 type TransitionPhase = "idle" | "covering" | "revealing";
+type TransitionKind = "common" | "departure";
 type NavigateOptions = { replace?: boolean; origin?: { x: number; y: number } };
 
 type PageTransitionValue = {
@@ -31,6 +35,10 @@ export function titleSlideDirection(from: string, to: string) {
   return 0;
 }
 
+export function transitionKind(from: string, to: string): TransitionKind {
+  return from === "/decided" && to === "/adventure" ? "departure" : "common";
+}
+
 export function isTransitionableHref(href: string, currentUrl: string) {
   const current = new URL(currentUrl);
   const target = new URL(href, current);
@@ -47,6 +55,7 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
   const finishSlide = useRef<(() => void) | null>(null);
   const [skipTitleIntro, setSkipTitleIntro] = useState(false);
   const [phase, setPhase] = useState<TransitionPhase>("idle");
+  const [kind, setKind] = useState<TransitionKind>("common");
   const [origin, setOrigin] = useState({ x: 0, y: 0 });
   const timers = useRef<number[]>([]);
 
@@ -189,15 +198,20 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
         return;
       }
 
+      const nextKind = transitionKind(window.location.pathname, target.pathname);
+      const coverDuration = nextKind === "departure" ? DEPARTURE_COVER_DURATION_MS : COVER_DURATION_MS;
+      const revealDelay = nextKind === "departure" ? DEPARTURE_REVEAL_DELAY_MS : REVEAL_DELAY_MS;
+      const revealDuration = nextKind === "departure" ? DEPARTURE_REVEAL_DURATION_MS : REVEAL_DURATION_MS;
       setOrigin(options.origin ?? { x: window.innerWidth / 2, y: window.innerHeight / 2 });
+      setKind(nextKind);
       setPhase("covering");
       timers.current.push(
         window.setTimeout(() => {
           if (options.replace) router.replace(href);
           else router.push(href);
-          timers.current.push(window.setTimeout(() => setPhase("revealing"), REVEAL_DELAY_MS));
-        }, COVER_DURATION_MS),
-        window.setTimeout(() => setPhase("idle"), COVER_DURATION_MS + REVEAL_DELAY_MS + REVEAL_DURATION_MS),
+          timers.current.push(window.setTimeout(() => setPhase("revealing"), revealDelay));
+        }, coverDuration),
+        window.setTimeout(() => setPhase("idle"), coverDuration + revealDelay + revealDuration),
       );
     },
     [phase, router, prepareSlide],
@@ -209,14 +223,38 @@ export function PageTransitionProvider({ children }: { children: ReactNode }) {
       <div ref={content} className={skipTitleIntro ? styles.returnedTitle : undefined}>{children}</div>
       {phase !== "idle" && (
         <div
-          className={`${styles.overlay} ${phase === "covering" ? styles.covering : styles.revealing}`}
+          className={`${styles.overlay} ${phase === "covering" ? styles.covering : styles.revealing} ${kind === "departure" ? styles.departure : ""}`}
           style={{ "--transition-x": `${origin.x}px`, "--transition-y": `${origin.y}px` } as React.CSSProperties}
           aria-hidden="true"
         >
-          <div className={styles.veil} />
-          <div className={styles.portal} />
-          <div className={styles.route} />
-          <div className={styles.label}>DESTINATION UNKNOWN</div>
+          {kind === "departure" ? (
+            <div className={styles.departureScene}>
+              <div className={styles.departureHorizon} />
+              <div className={styles.destinationSignal}>
+                <span className={styles.destinationCore} />
+              </div>
+              <svg className={styles.departureTrail} viewBox="0 0 390 844" preserveAspectRatio="none">
+                <defs>
+                  <clipPath id="departure-light-trail-reveal">
+                    <rect className={styles.lightTrailReveal} x="0" y="220" width="390" height="640" />
+                  </clipPath>
+                </defs>
+                <g clipPath="url(#departure-light-trail-reveal)">
+                  <path className={styles.lightTrailGlow} d="M195 228 C195 292 235 315 225 362 C211 421 133 427 145 490 C159 561 264 570 242 648 C221 724 133 748 195 860" />
+                  <path className={styles.lightTrailCore} d="M195 228 C195 292 235 315 225 362 C211 421 133 427 145 490 C159 561 264 570 242 648 C221 724 133 748 195 860" />
+                  <path className={styles.lightTrailHighlight} d="M195 228 C195 292 235 315 225 362 C211 421 133 427 145 490 C159 561 264 570 242 648 C221 724 133 748 195 860" />
+                </g>
+              </svg>
+              <div className={styles.departureLabel}>ROUTE FOUND</div>
+            </div>
+          ) : (
+            <>
+              <div className={styles.veil} />
+              <div className={styles.portal} />
+              <div className={styles.route} />
+              <div className={styles.label}>DESTINATION UNKNOWN</div>
+            </>
+          )}
         </div>
       )}
     </PageTransitionContext.Provider>
