@@ -78,7 +78,7 @@ describe("OSM recommendations", () => {
   const url = new URL(String(request.mock.calls.at(-1)?.[0]));
   expect(url.hostname).toBe("nominatim.openstreetmap.org");
   expect(url.searchParams.get("bounded")).toBe("1");
-  expect(url.searchParams.get("q")).toBe("公園");
+  expect(url.searchParams.get("q")).toBe("県立公園");
  });
  it("道の駅はhighway=servicesで探し、Nominatimの無関係な結果は種別で除外してOverpassへ進む", async () => {
   const roadside = { ...settings, category: "roadside_station" as const };

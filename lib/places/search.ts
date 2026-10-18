@@ -23,7 +23,7 @@ const nominatimTypes: Record<Exclude<Category, "random">, (category: string, typ
  roadside_station: (c, t) => c === "highway" && ["services", "rest_area"].includes(t),
 };
 const searchTerms: Record<Exclude<Category, "random">, string> = {
- nature: "公園", cafe: "カフェ", history: "史跡", hot_spring: "温泉", roadside_station: "道の駅",
+ nature: "県立公園", cafe: "カフェ", history: "神社", hot_spring: "温泉", roadside_station: "道の駅",
 };
 let nominatimQueue: Promise<void> = Promise.resolve();
 let lastNominatimRequest = 0;
