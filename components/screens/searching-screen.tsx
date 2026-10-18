@@ -2,10 +2,9 @@ import { ScreenFrame } from "./screen-frame";
 import { SearchingContours } from "./contours/searching";
 
 /** design-ref/screens/03_searching.html（掃引部分と針は CSS で回転。動きを減らす設定では静止） */
-export function SearchingScreen({ finishing = false }: { finishing?: boolean }) {
+export function SearchingScreen() {
   return (
     <ScreenFrame background="var(--ink)" label="目的地を探しています" live>
-      <div className={`search-scene${finishing ? " search-scene-finishing" : ""}`}>
       <svg className="abs" width="390" height="844" style={{left:"0",top:"0"}}>
         <defs>
           <linearGradient id="sw" x1="0" y1="0" x2="1" y2="0">
@@ -19,27 +18,19 @@ export function SearchingScreen({ finishing = false }: { finishing?: boolean }) 
         </defs>
         <SearchingContours />
         <circle cx="195" cy="400" r="190" fill="url(#glow)" />
-        <g fill="none" stroke="#F5A524" strokeWidth="1.8" pointerEvents="none" aria-hidden="true">
-          <circle className="radar-wave" cx="195" cy="400" r="176" />
-          <circle className="radar-wave radar-wave-two" cx="195" cy="400" r="176" />
-          <circle className="radar-wave radar-wave-three" cx="195" cy="400" r="176" />
-        </g>
+        <circle cx="195" cy="400" r="44" fill="none" stroke="#F5A524" strokeOpacity="0.9" strokeWidth="1.6" />
+        <circle cx="195" cy="400" r="88" fill="none" stroke="#F5A524" strokeOpacity="0.6" strokeWidth="1.6" />
+        <circle cx="195" cy="400" r="132" fill="none" stroke="#F5A524" strokeOpacity="0.38" strokeWidth="1.6" />
+        <circle cx="195" cy="400" r="176" fill="none" stroke="#F5A524" strokeOpacity="0.2" strokeWidth="1.6" />
         <g className="radar">
         <path d="M195 400 L195 224 A176 176 0 0 1 351 316 Z" fill="url(#sw)" opacity=".75" />
         <line x1="195" y1="400" x2="195" y2="224" stroke="#F5A524" strokeWidth="2.5" strokeLinecap="round" />
         </g>
         <circle cx="195" cy="400" r="9" fill="#F5A524" />
-        {/* 北向きから時計回りの角度 / 360 × 掃引周期（3.2秒）で点灯を同期。 */}
-        {[
-          { x: 280, y: 318, r: 6, delay: "0.409s" },
-          { x: 132, y: 470, r: 4, delay: "1.973s" },
-          { x: 238, y: 505, r: 5, delay: "1.402s" },
-        ].map(({ x, y, r, delay }) => (
-          <g key={`${x}-${y}`} style={{ "--echo-delay": delay } as React.CSSProperties}>
-            <circle className="radar-echo" cx={x} cy={y} r="14" fill="none" stroke="#F5A524" />
-            <circle className="radar-target" cx={x} cy={y} r={r} fill="#fff" />
-          </g>
-        ))}
+        <circle cx="280" cy="318" r="6" fill="#fff" opacity=".95" />
+        <circle cx="280" cy="318" r="14" fill="none" stroke="#fff" strokeOpacity=".5" />
+        <circle cx="132" cy="470" r="4" fill="#fff" opacity=".6" />
+        <circle cx="238" cy="505" r="5" fill="#fff" opacity=".4" />
       </svg>
       <div className="logo" style={{color:"#fff"}}>
         <i>
@@ -53,7 +44,6 @@ export function SearchingScreen({ finishing = false }: { finishing?: boolean }) 
       <div className="abs" style={{left:"0",right:"0",top:"690px",textAlign:"center",color:"#fff",fontWeight:"700",fontSize:"19px",letterSpacing:".2em"}}>
         さがしています
         <span style={{color:"#F5A524"}}>…</span>
-      </div>
       </div>
     </ScreenFrame>
   );
