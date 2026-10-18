@@ -135,7 +135,7 @@ function Ride({ plan }: { plan: PublicAdventurePlan }) {
       onStop={stop}
       onMap={() => setMapOpen(true)}
     />
-    {mapOpen && <RouteMapDialog route={plan.route} onClose={() => setMapOpen(false)} />}
+    {mapOpen && <RouteMapDialog sealedDestination={plan.sealedDestination} route={plan.route} onClose={() => setMapOpen(false)} />}
     </>
   );
 }

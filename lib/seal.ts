@@ -3,11 +3,16 @@ import type { Coordinates, DestinationCandidate } from "@/types/adventure";
 
 /** Server entry points only. Never import into client components. */
 const TTL_MS = 12 * 60 * 60 * 1000;
-// 環境変数が未設定の間は、プロセスごとの乱数鍵を使う（再起動・別インスタンスでは開けなくなる）。
-const processSecret = randomBytes(32).toString("hex");
+// 同一プロセスのAPI別バンドル・開発中の再読込でも鍵を共有する。
+// 再起動や別インスタンスをまたぐ場合はADVENTURE_SEAL_SECRETを設定する。
+const secretSymbol = Symbol.for("mystery-navi.seal-secret.v1");
+function fallbackSecret(): string {
+  const shared = globalThis as typeof globalThis & { [secretSymbol]?: string };
+  return shared[secretSymbol] ??= randomBytes(32).toString("hex");
+}
 
 function key() {
-  return createHash("sha256").update(process.env.ADVENTURE_SEAL_SECRET || processSecret).digest();
+  return createHash("sha256").update(process.env.ADVENTURE_SEAL_SECRET || fallbackSecret()).digest();
 }
 
 export type SealedDestination = {
