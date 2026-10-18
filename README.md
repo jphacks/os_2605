@@ -4,6 +4,9 @@
 
 <img src="public/images/mysterip-top.png" alt="MYSTERIPのトップ画面。行き先を知らずに出発する画面" width="320">
 
+・デモ動画URL
+https://vimeo.com/1236960116/3a6cd34344?share=copy&fl=sv&fe=ci
+
 ## 製品概要
 
 ### 背景(製品開発のきっかけ、課題等）
