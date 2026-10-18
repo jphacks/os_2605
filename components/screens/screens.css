@@ -1,4 +1,5 @@
-/* design-ref/screens/*.html の <style> をそのまま移した。.s 配下に閉じる。 */
+/* 外側の全画面背景と内側のデザインキャンバスで同じ色を使う。 */
+.screen-frame,
 .s {
   --ink: #0d2b2e;
   --deep: #071a1d;
@@ -7,6 +8,10 @@
   --paper: #f6f8f3;
   --amber: #f5a524;
   --dawn: #ffd58a;
+}
+
+/* design-ref/screens/*.html の <style> をそのまま移した。.s 配下に閉じる。 */
+.s {
   width: 390px;
   height: 844px;
   position: relative;
