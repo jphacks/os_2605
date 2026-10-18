@@ -15,6 +15,7 @@ id_ed25519
 # Local dependencies and generated files
 node_modules/
 .next/
+*-.next/
 out/
 coverage/
 *.tsbuildinfo

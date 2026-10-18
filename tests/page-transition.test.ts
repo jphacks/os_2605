@@ -1,8 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { isTransitionableHref } from "@/components/navigation/page-transition";
+import { isTransitionableHref, titleSlideDirection } from "@/components/navigation/page-transition";
 
 describe("page transition navigation", () => {
   const current = "https://example.com/setup?minutes=30";
+
+  it("slides only between the title and setup, in opposite directions", () => {
+    expect(titleSlideDirection("/", "/setup")).toBe(1);
+    expect(titleSlideDirection("/setup", "/")).toBe(-1);
+    for (const [from, to] of [["/setup", "/search"], ["/search", "/decided"], ["/decided", "/setup"], ["/arrived", "/"], ["/", "/"]]) {
+      expect(titleSlideDirection(from, to)).toBe(0);
+    }
+  });
 
   it("accepts another internal page", () => {
     expect(isTransitionableHref("/search?minutes=30", current)).toBe(true);
