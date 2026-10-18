@@ -6,6 +6,7 @@ import "./screens.css";
 export const SCREEN_WIDTH = 390;
 export const SCREEN_HEIGHT = 844;
 const MAX_SCALE = 1.35;
+const MOBILE_MAX_WIDTH = 600;
 
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange);
@@ -17,6 +18,19 @@ const serverSize = () => `${SCREEN_WIDTH}x${SCREEN_HEIGHT}`;
 export function fitScale(size: string) {
   const [width, height] = size.split("x").map(Number);
   return Math.min(width / SCREEN_WIDTH, height / SCREEN_HEIGHT, MAX_SCALE);
+}
+
+/**
+ * スマホの縦画面では端末ごとの縦横比に合わせて画面全体を使う。
+ * PC・タブレットではモックの比率を維持し、過度に拡大しない。
+ */
+export function fitScreen(size: string) {
+  const [width, height] = size.split("x").map(Number);
+  if (width <= MOBILE_MAX_WIDTH && height >= width) {
+    return { scaleX: width / SCREEN_WIDTH, scaleY: height / SCREEN_HEIGHT };
+  }
+  const scale = fitScale(size);
+  return { scaleX: scale, scaleY: scale };
 }
 
 export function ScreenFrame({
@@ -31,7 +45,7 @@ export function ScreenFrame({
   live?: boolean;
   children: ReactNode;
 }) {
-  const scale = fitScale(useSyncExternalStore(subscribe, viewportSize, serverSize));
+  const { scaleX, scaleY } = fitScreen(useSyncExternalStore(subscribe, viewportSize, serverSize));
   return (
     <main
       aria-label={label}
@@ -46,8 +60,8 @@ export function ScreenFrame({
         justifyContent: "center",
       }}
     >
-      <div style={{ width: SCREEN_WIDTH * scale, height: SCREEN_HEIGHT * scale, flex: "none" }}>
-        <div className="s" style={{ background, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+      <div style={{ width: SCREEN_WIDTH * scaleX, height: SCREEN_HEIGHT * scaleY, flex: "none" }}>
+        <div className="s" style={{ background, transform: `scale(${scaleX}, ${scaleY})`, transformOrigin: "top left" }}>
           {children}
         </div>
       </div>
