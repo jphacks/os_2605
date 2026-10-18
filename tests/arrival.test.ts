@@ -130,7 +130,7 @@ describe("adventures API", () => {
       settings: {
         origin: route.origin,
         vehicleType: "car",
-        durationMinutes: 50,
+        durationMinutes: 121,
         category: "random",
       },
     };

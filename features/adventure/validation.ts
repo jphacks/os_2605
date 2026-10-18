@@ -7,6 +7,8 @@ import type {
   VehicleType,
 } from "@/types/adventure";
 import {
+  normalizeSearchMinutes,
+  SEARCH_DURATION_MIN,
   categoryOptions,
   durationOptions,
   vehicleOptions,
@@ -25,7 +27,7 @@ export function isVehicleType(value: unknown): value is VehicleType {
 }
 
 export function isDurationMinutes(value: unknown): value is DurationMinutes {
-  return typeof value === "number" && durationValues.includes(value);
+  return typeof value === "number" && value >= SEARCH_DURATION_MIN && durationValues.includes(value);
 }
 
 export function isCategory(value: unknown): value is Category {
@@ -53,15 +55,16 @@ export type SetupSelection = Pick<
 >;
 
 export function parseSetupSelection(value: unknown): SetupSelection | null {
+  const minutes = isRecord(value) ? normalizeSearchMinutes(value.durationMinutes) : null;
   if (
     isRecord(value) &&
     isVehicleType(value.vehicleType) &&
-    isDurationMinutes(value.durationMinutes) &&
+    isDurationMinutes(minutes) &&
     isCategory(value.category)
   ) {
     return {
       vehicleType: value.vehicleType,
-      durationMinutes: value.durationMinutes,
+      durationMinutes: minutes,
       category: value.category,
     };
   }

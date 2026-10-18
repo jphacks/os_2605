@@ -1,4 +1,3 @@
-import type { DurationMinutes } from "@/types/adventure";
 import { DURATION_MAX, DURATION_MIN, DURATION_STEP } from "./setup-options";
 
 /** 02 時間ダイヤルの幾何。1周=120分、真上=0分、時計回り。 */
@@ -20,17 +19,17 @@ export function pointOnDial(minutes: number, radius: number) {
   return { x: DIAL.cx + radius * Math.sin(theta), y: DIAL.cy - radius * Math.cos(theta) };
 }
 
-export function clampMinutes(value: number): DurationMinutes {
+export function clampMinutes(value: number): number {
   const stepped = Math.round(value / DURATION_STEP) * DURATION_STEP;
-  return Math.min(DURATION_MAX, Math.max(DURATION_MIN, stepped)) as DurationMinutes;
+  return Math.min(DURATION_MAX, Math.max(DURATION_MIN, stepped));
 }
 
 /**
- * ダイヤル上の角度を30〜120分（15分刻み）へ変換する。
- * 0付近は範囲外なので、ドラッグ中は直前の値から近い端（30か120）へ寄せ、上端をまたいで反対側へ飛ばない。
- * previous が null（タップ直後）のときは30分側に寄せる。
+ * ダイヤル上の角度を0〜120分（1分刻み）へ変換する。
+ * ドラッグ中は上端をまたいで反対側へ飛ばないよう、直前の値に応じて0か120へ寄せる。
+ * previous が null（タップ直後）のときはタップした角度を使用する。
  */
-export function dialMinutes(angle: number, previous: number | null): DurationMinutes {
+export function dialMinutes(angle: number, previous: number | null): number {
   const raw = (angle / 360) * DIAL.fullTurnMinutes;
   const snapped = Math.round(raw / DURATION_STEP) * DURATION_STEP;
   if (snapped < DURATION_MIN) return previous !== null && previous >= 75 ? DURATION_MAX : DURATION_MIN;
