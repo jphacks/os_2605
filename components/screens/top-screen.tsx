@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink } from "@/components/navigation/page-transition";
 import { ScreenFrame } from "./screen-frame";
 import { TopContours } from "./contours/top";
 
@@ -86,7 +86,7 @@ export function TopScreen() {
       <div className="abs top-kicker" style={{ left: "27px", top: "514px" }}>DESTINATION&nbsp;&nbsp;/&nbsp;&nbsp;UNKNOWN</div>
       <div className="abs top-title" style={{ left: "24px", top: "544px", fontWeight: "900", fontSize: "56px", lineHeight: "1.05", letterSpacing: "-.02em", whiteSpace: "nowrap" }}>ミステリップ</div>
       <div className="abs top-subtitle" style={{ left: "27px", top: "626px", fontWeight: "700", fontSize: "18px", color: "#16413F", letterSpacing: ".12em" }}>まだ名前のない場所へ</div>
-      <Link href="/setup" className="cta dark top-cta">
+      <TransitionLink href="/setup" className="cta dark top-cta">
         出発
         <b>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: "currentColor" }}>
@@ -94,7 +94,7 @@ export function TopScreen() {
             <path d="M9 5 H19 V15" />
           </svg>
         </b>
-      </Link>
+      </TransitionLink>
       <p className="credit top-credit">地図 © OpenStreetMap contributors ・ 経路 OSRM ・ 操作は安全な場所に停車して行ってください</p>
     </ScreenFrame>
   );

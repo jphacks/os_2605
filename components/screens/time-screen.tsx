@@ -1,6 +1,6 @@
 "use client";
-import Link from "next/link";
 import { useRef, type KeyboardEvent, type PointerEvent } from "react";
+import { TransitionLink } from "@/components/navigation/page-transition";
 import { DIAL, angleFromOffset, angleOfMinutes, clampMinutes, dialMinutes, pointOnDial } from "@/features/adventure/dial";
 import { canStartAdventure, SEARCH_DURATION_MIN, DURATION_MAX, DURATION_MIN, DURATION_STEP } from "@/features/adventure/setup-options";
 import { ScreenFrame } from "./screen-frame";
@@ -96,17 +96,17 @@ export function TimeScreen({ minutes, onChange, startHref }: { minutes: number; 
         onPointerUp={() => (dragging.current = false)}
         onPointerCancel={() => (dragging.current = false)}
       />
-      <Link href="/" className="logo" style={{ left: "16px" }} aria-label="トップへ戻る">
+      <TransitionLink href="/" className="logo" style={{ left: "16px" }} aria-label="トップへ戻る">
         <span style={{ width: "36px", height: "36px", display: "grid", placeItems: "center" }}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D2B2E" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#0D2B2E" }}>
             <path d="M15 5 L8 12 L15 19" />
           </svg>
         </span>
-      </Link>
+      </TransitionLink>
       <p id="time-start-note" className="abs" style={{ left: "24px", right: "24px", top: "636px", textAlign: "center", color: "#16413F", fontSize: "14px" }}>
         {minutes === 0 ? "時間を選んでください" : minutes < SEARCH_DURATION_MIN ? "10分として目的地を検索します" : "片道の目安時間です"}
       </p>
-      {canStartAdventure(minutes) ? <Link href={startHref} className="cta dark" aria-describedby="time-start-note">
+      {canStartAdventure(minutes) ? <TransitionLink href={startHref} className="cta dark" aria-describedby="time-start-note">
         出発
         <b>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ color: "currentColor" }}>
@@ -114,7 +114,7 @@ export function TimeScreen({ minutes, onChange, startHref }: { minutes: number; 
             <path d="M9 5 H19 V15" />
           </svg>
         </b>
-      </Link> : <button type="button" disabled className="cta dark" aria-describedby="time-start-note" style={{ opacity: 0.45, cursor: "not-allowed" }}>出発</button>}
+      </TransitionLink> : <button type="button" disabled className="cta dark" aria-describedby="time-start-note" style={{ opacity: 0.45, cursor: "not-allowed" }}>出発</button>}
     </ScreenFrame>
   );
 }

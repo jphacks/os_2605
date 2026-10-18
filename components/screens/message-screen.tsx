@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { TransitionLink } from "@/components/navigation/page-transition";
 import { ScreenFrame } from "./screen-frame";
 
 /**
@@ -36,14 +36,14 @@ export function MessageScreen({
         )}
       </div>
       {secondary && (
-        <Link href={secondary.href} className="abs" style={{ left: "24px", right: "24px", bottom: "128px", textAlign: "center", color: "#fff", fontWeight: 700, fontSize: "16px", padding: "12px" }}>
+        <TransitionLink href={secondary.href} className="abs" style={{ left: "24px", right: "24px", bottom: "128px", textAlign: "center", color: "#fff", fontWeight: 700, fontSize: "16px", padding: "12px" }}>
           {secondary.label}
-        </Link>
+        </TransitionLink>
       )}
       {primary.href ? (
-        <Link href={primary.href} className="cta amber">
+        <TransitionLink href={primary.href} className="cta amber">
           {primary.label}
-        </Link>
+        </TransitionLink>
       ) : (
         <button type="button" onClick={primary.onClick} className="cta amber">
           {primary.label}
