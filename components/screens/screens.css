@@ -127,9 +127,276 @@
     transform: rotate(360deg);
   }
 }
+
+/* トップ画面案2: 地図上に開く、まだ名前のない目的地への入口。 */
+.s .top-visual {
+  transform-origin: 195px 278px;
+  animation: portal-scene-in 500ms ease-out both;
+}
+.s .top-world-lines {
+  transform-box: view-box;
+  transform-origin: 195px 278px;
+  animation: portal-map-drift 12s ease-in-out infinite alternate;
+}
+.s .top-portal-reveal {
+  transform-box: view-box;
+  transform-origin: 195px 278px;
+  animation: portal-cinematic-open 2.45s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+.s .top-portal-breathe {
+  transform-box: view-box;
+  transform-origin: 195px 278px;
+  animation: portal-breathe 4.4s 2.45s ease-in-out infinite;
+}
+.s .top-opening-veil {
+  animation: portal-veil-lift 2.45s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+.s .top-portal-aura {
+  animation: portal-aura 2.8s ease-in-out infinite;
+}
+.s .top-ring,
+.s .top-depth-rings,
+.s .top-star-field {
+  transform-box: view-box;
+  transform-origin: 195px 278px;
+}
+.s .top-ring-outer {
+  animation: portal-ring-clockwise 13s linear infinite;
+}
+.s .top-ring-inner {
+  animation: portal-ring-counter 8s linear infinite;
+}
+.s .top-depth-rings {
+  animation: portal-depth 3.8s ease-in-out infinite;
+}
+.s .top-star-field {
+  animation: portal-stars 9s linear infinite;
+}
+.s .top-inner-route,
+.s .top-journey-line {
+  stroke-dasharray: 18 12;
+  animation: portal-route-flow 1.15s linear infinite;
+}
+.s .top-portal-wave {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 195px 278px;
+  animation: portal-wave 3.6s cubic-bezier(0.1, 0.55, 0.25, 1) infinite;
+}
+.s .top-portal-wave-two {
+  animation-delay: 1.8s;
+}
+.s .top-beacon,
+.s .top-beacon-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: portal-beacon 1.6s ease-in-out infinite;
+}
+.s .top-kicker,
+.s .top-title,
+.s .top-subtitle,
+.s .top-cta,
+.s .top-credit {
+  opacity: 0;
+}
+.s .top-kicker {
+  color: var(--amber);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  animation: portal-copy-in 700ms 2.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.s .top-title {
+  animation: portal-copy-in 900ms 2.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.s .top-subtitle {
+  animation: portal-copy-in 800ms 2.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.s .top-cta {
+  animation:
+    portal-copy-in 850ms 2.85s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+    portal-cta-pulse 3s 4s ease-in-out infinite;
+}
+.s .top-credit {
+  animation: portal-copy-in 700ms 3.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes portal-scene-in {
+  from {
+    opacity: 0;
+    filter: blur(18px);
+    transform: scale(1.18);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+@keyframes portal-map-drift {
+  from {
+    opacity: 0.45;
+    transform: scale(1.02) rotate(-1.5deg);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1.09) rotate(1.5deg);
+  }
+}
+@keyframes portal-cinematic-open {
+  0% {
+    opacity: 0;
+    filter: blur(18px);
+    transform: translateY(112px) scale(0.25) rotate(-32deg);
+  }
+  22% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(112px) scale(1.68) rotate(0);
+  }
+  58% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(112px) scale(1.58) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+@keyframes portal-veil-lift {
+  0%,
+  58% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes portal-breathe {
+  0%,
+  100% {
+    transform: scale(0.97);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+@keyframes portal-aura {
+  0%,
+  100% {
+    opacity: 0.42;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes portal-ring-clockwise {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes portal-ring-counter {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes portal-depth {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.78) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.16) rotate(12deg);
+  }
+}
+@keyframes portal-stars {
+  0% {
+    opacity: 0.45;
+    transform: rotate(0) scale(0.92);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.45;
+    transform: rotate(360deg) scale(1.08);
+  }
+}
+@keyframes portal-route-flow {
+  to {
+    stroke-dashoffset: -30;
+  }
+}
+@keyframes portal-wave {
+  0% {
+    opacity: 0.62;
+    transform: scale(0.86);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
+}
+@keyframes portal-beacon {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(0.72);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+@keyframes portal-copy-in {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes portal-cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 165, 36, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(245, 165, 36, 0.16);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .s .radar {
     animation: none;
+  }
+  .s .top-visual,
+  .s .top-world-lines,
+  .s .top-opening-veil,
+  .s .top-portal-reveal,
+  .s .top-portal-breathe,
+  .s .top-portal-aura,
+  .s .top-ring,
+  .s .top-depth-rings,
+  .s .top-star-field,
+  .s .top-inner-route,
+  .s .top-journey-line,
+  .s .top-portal-wave,
+  .s .top-beacon,
+  .s .top-beacon-glow,
+  .s .top-kicker,
+  .s .top-title,
+  .s .top-subtitle,
+  .s .top-cta,
+  .s .top-credit {
+    animation: none;
+    opacity: 1;
   }
 }
 .s .sr-only {
